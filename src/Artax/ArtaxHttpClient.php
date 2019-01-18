@@ -28,8 +28,6 @@ use GuzzleHttp\Psr7\Response as Psr7Response;
 
 /**
  * Artax (amphp-based) http client
- *
- * @codeCoverageIgnore
  */
 final class ArtaxHttpClient implements HttpClient
 {
@@ -253,11 +251,13 @@ final class ArtaxHttpClient implements HttpClient
      */
     private static function adaptThrowable(\Throwable $throwable): \Throwable
     {
-        /** @var class-string<\Exception> $exceptionClass */
         $exceptionClass = \get_class($throwable);
 
         if(true === isset(self::EXCEPTIONS_MAPPING[$exceptionClass]))
         {
+            /** @var class-string<\Exception> $exceptionClass */
+            $exceptionClass = self::EXCEPTIONS_MAPPING[$exceptionClass];
+
             return new $exceptionClass($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
         }
 

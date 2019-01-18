@@ -20,8 +20,6 @@ use Desperado\ServiceBus\HttpClient\InputFilePath;
 
 /**
  * Artax form body implementation
- *
- * @codeCoverageIgnore
  */
 final class ArtaxFormBody implements FormBody
 {

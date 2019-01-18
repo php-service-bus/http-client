@@ -1,9 +1,9 @@
 <?php
 
 /**
- * PHP Service Bus (publish-subscribe pattern implementation) http client component
+ * PHP Service Bus (publish-subscribe pattern) Http client component
  *
- * @author  Maksim Masiukevich <desperado@minsk-info.ru>
+ * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
@@ -11,8 +11,8 @@
 declare(strict_types = 1);
 
 use Amp\Loop;
-use Desperado\ServiceBus\HttpClient\Artax\ArtaxHttpClient;
-use Desperado\ServiceBus\HttpClient\HttpRequest;
+use ServiceBus\HttpClient\Artax\ArtaxHttpClient;
+use ServiceBus\HttpClient\HttpRequest;
 
 include __DIR__ . '/../vendor/autoload.php';
 

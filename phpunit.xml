@@ -16,6 +16,7 @@
     <testsuites>
         <testsuite name="Service Bus Http client">
             <directory>./tests/</directory>
+            <directory>./examples/</directory>
         </testsuite>
     </testsuites>
 

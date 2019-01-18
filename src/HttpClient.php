@@ -1,16 +1,16 @@
 <?php
 
 /**
- * PHP Service Bus (publish-subscribe pattern implementation) http client component
+ * PHP Service Bus (publish-subscribe pattern) Http client component
  *
- * @author  Maksim Masiukevich <desperado@minsk-info.ru>
+ * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
 declare(strict_types = 1);
 
-namespace Desperado\ServiceBus\HttpClient;
+namespace ServiceBus\HttpClient;
 
 use Amp\Promise;
 
@@ -26,10 +26,10 @@ interface HttpClient
      *
      * @return Promise<\GuzzleHttp\Psr7\Response>
      *
-     * @throws \Desperado\ServiceBus\HttpClient\Exception\DnsResolveFailed
-     * @throws \Desperado\ServiceBus\HttpClient\Exception\ConnectionFailed
-     * @throws \Desperado\ServiceBus\HttpClient\Exception\RequestTimeoutReached
-     * @throws \Desperado\ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
+     * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
+     * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
+     * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
+     * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
      */
     public function execute(HttpRequest $requestData): Promise;
 
@@ -42,10 +42,10 @@ interface HttpClient
      *
      * @return Promise<string> Path to file
      *
-     * @throws \Desperado\ServiceBus\HttpClient\Exception\DnsResolveFailed
-     * @throws \Desperado\ServiceBus\HttpClient\Exception\ConnectionFailed
-     * @throws \Desperado\ServiceBus\HttpClient\Exception\RequestTimeoutReached
-     * @throws \Desperado\ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
+     * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
+     * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
+     * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
+     * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
      */
     public function download(string $filePath, string $destinationDirectory, string $fileName): Promise;
 }

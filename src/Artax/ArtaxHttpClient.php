@@ -1,16 +1,16 @@
 <?php
 
 /**
- * PHP Service Bus (publish-subscribe pattern implementation) http client component
+ * PHP Service Bus (publish-subscribe pattern) Http client component
  *
- * @author  Maksim Masiukevich <desperado@minsk-info.ru>
+ * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
 declare(strict_types = 1);
 
-namespace Desperado\ServiceBus\HttpClient\Artax;
+namespace ServiceBus\HttpClient\Artax;
 
 use Amp\Artax;
 use function Amp\ByteStream\pipe;
@@ -19,9 +19,9 @@ use function Amp\File\open;
 use function Amp\File\rename;
 use Amp\File\StatCache;
 use Amp\Promise;
-use Desperado\ServiceBus\HttpClient\Exception as HttpClientExceptions;
-use Desperado\ServiceBus\HttpClient\HttpClient;
-use Desperado\ServiceBus\HttpClient\HttpRequest;
+use ServiceBus\HttpClient\Exception as HttpClientExceptions;
+use ServiceBus\HttpClient\HttpClient;
+use ServiceBus\HttpClient\HttpRequest;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use GuzzleHttp\Psr7\Response as Psr7Response;

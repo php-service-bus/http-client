@@ -1,22 +1,22 @@
 <?php
 
 /**
- * PHP Service Bus (publish-subscribe pattern implementation) http client component
+ * PHP Service Bus (publish-subscribe pattern) Http client component
  *
- * @author  Maksim Masiukevich <desperado@minsk-info.ru>
+ * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
 declare(strict_types = 1);
 
-namespace Desperado\ServiceBus\HttpClient\Artax;
+namespace ServiceBus\HttpClient\Artax;
 
 use Amp\Artax\FormBody as AmpFormBody;
 use Amp\ByteStream\InputStream;
 use Amp\Promise;
-use Desperado\ServiceBus\HttpClient\FormBody;
-use Desperado\ServiceBus\HttpClient\InputFilePath;
+use ServiceBus\HttpClient\FormBody;
+use ServiceBus\HttpClient\InputFilePath;
 
 /**
  * Artax form body implementation

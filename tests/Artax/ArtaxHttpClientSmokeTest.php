@@ -1,20 +1,20 @@
 <?php
 
 /**
- * PHP Service Bus (publish-subscribe pattern implementation) http client component
+ * PHP Service Bus (publish-subscribe pattern) Http client component
  *
- * @author  Maksim Masiukevich <desperado@minsk-info.ru>
+ * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
 declare(strict_types = 1);
 
-namespace Desperado\ServiceBus\HttpClient\Tests\Artax;
+namespace ServiceBus\HttpClient\Tests\Artax;
 
 use function Amp\Promise\wait;
-use Desperado\ServiceBus\HttpClient\Artax\ArtaxHttpClient;
-use Desperado\ServiceBus\HttpClient\HttpRequest;
+use ServiceBus\HttpClient\Artax\ArtaxHttpClient;
+use ServiceBus\HttpClient\HttpRequest;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,7 +24,7 @@ final class ArtaxHttpClientSmokeTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Desperado\ServiceBus\HttpClient\Exception\HttpClientException
+     * @expectedException \ServiceBus\HttpClient\Exception\HttpClientException
      *
      * @return void
      *
@@ -81,7 +81,7 @@ final class ArtaxHttpClientSmokeTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Desperado\ServiceBus\HttpClient\Exception\DnsResolveFailed
+     * @expectedException \ServiceBus\HttpClient\Exception\DnsResolveFailed
      *
      * @return void
      *

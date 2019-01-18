@@ -1,12 +1,12 @@
 {
-  "name": "mmasiukevich/http-client",
+  "name": "php-service-bus/http-client",
   "description": "PHP Service Bus (publish-subscribe pattern) Http client component",
   "type": "library",
-  "keywords": [],
+  "keywords": ["cqrs", "event-sourcing", "async-php", "command-bus", "messaging"],
   "authors": [
     {
       "name": "Masiukevich Maksim",
-      "email": "desperado@minsk-info.ru",
+      "email": "dev@async-php.com",
       "homepage": "https://github.com/mmasiukevich",
       "role": "Developer"
     }
@@ -14,12 +14,12 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Desperado\\ServiceBus\\HttpClient\\": "src/"
+      "ServiceBus\\HttpClient\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Desperado\\ServiceBus\\HttpClient\\Tests\\": "tests/"
+      "ServiceBus\\HttpClient\\Tests\\": "tests/"
     }
   },
   "require": {

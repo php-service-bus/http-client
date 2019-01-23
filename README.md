@@ -8,11 +8,11 @@ Abstraction over Http client implementations for use in [service-bus](https://gi
 
 ## Usage
 
-Query parameters are formed using the [HttpRequest](https://github.com/php-service-bus/http-client/blob/master/src/HttpRequest.php) structure. The http request execution adapter must implement the [HttpClient](https://github.com/php-service-bus/http-client/blob/master/src/HttpClient.php) interface
+Request parameters are formed using the [HttpRequest](https://github.com/php-service-bus/http-client/blob/master/src/HttpRequest.php) structure. The http request execution adapter must implement the [HttpClient](https://github.com/php-service-bus/http-client/blob/master/src/HttpClient.php) interface
 
 ## Examples:
 
-#### Simple GET request (Using [Artax](https://github.com/amphp/artax)):
+#### Simple GET request (using [Artax](https://github.com/amphp/artax)):
 ```php
 $client = new ArtaxHttpClient();
 
@@ -27,7 +27,7 @@ Loop::run(
 );
 ```
 
-#### File download (Using [Artax](https://github.com/amphp/artax)):
+#### File download (using [Artax](https://github.com/amphp/artax)):
 
 ```php
 $client = new ArtaxHttpClient();
@@ -61,5 +61,5 @@ Loop::run(
         echo $filePath;
     }
 );
-```bash
+```
 

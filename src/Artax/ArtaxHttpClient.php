@@ -73,7 +73,7 @@ final class ArtaxHttpClient implements HttpClient
         return call(
             function(HttpRequest $requestData): \Generator
             {
-                $generator = 'GET' === $requestData->httpMethod()
+                $generator = 'GET' === $requestData->method
                     ? $this->executeGet($requestData)
                     : $this->executePost($requestData);
 
@@ -138,8 +138,8 @@ final class ArtaxHttpClient implements HttpClient
      */
     private function executeGet(HttpRequest $requestData): \Generator
     {
-        $request = (new Artax\Request($requestData->url(), $requestData->httpMethod()))
-            ->withHeaders($requestData->headers());
+        $request = (new Artax\Request($requestData->url, $requestData->method))
+            ->withHeaders($requestData->headers);
 
         return self::doRequest(
             $this->handler,
@@ -160,15 +160,15 @@ final class ArtaxHttpClient implements HttpClient
     private function executePost(HttpRequest $requestData): \Generator
     {
         /** @var ArtaxFormBody|string|null $body */
-        $body = $requestData->body();
+        $body = $requestData->body;
 
-        $request = (new Artax\Request($requestData->url(), $requestData->httpMethod()))
+        $request = (new Artax\Request($requestData->url, $requestData->method))
             ->withBody(
                 $body instanceof ArtaxFormBody
                     ? $body->preparedBody()
                     : $body
             )
-            ->withHeaders($requestData->headers());
+            ->withHeaders($requestData->headers);
 
         return self::doRequest($this->handler, $request, $this->logger);
     }

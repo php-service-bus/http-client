@@ -14,27 +14,32 @@ namespace ServiceBus\HttpClient;
 
 /**
  * Http request data
+ *
+ * @property-read string                          $method
+ * @property-read string                          $url
+ * @property-read array<string, string|int|float> $headers
+ * @property-read FormBody|string|null            $body
  */
-final class HttpRequest
+class HttpRequest
 {
     /**
      * Http method
      *
      * @var string
      */
-    private $method;
+    public $method;
 
     /**
      * Request URL
      *
      * @var string
      */
-    private $url;
+    public $url;
 
     /**
      * Request headers
      *
-     * @var array
+     * @var array<string, string|int|float>
      */
     private $headers;
 
@@ -43,7 +48,7 @@ final class HttpRequest
      *
      * @var FormBody|string|null
      */
-    private $body;
+    public $body;
 
     /**
      * @param string $url
@@ -79,6 +84,12 @@ final class HttpRequest
      */
     private function __construct(string $method, string $url, array $headers = [], $body = null)
     {
+        if($body instanceof FormBody)
+        {
+            /** @var array<string, string|int|float> $headers */
+            $headers = \array_merge($body->headers(), $headers);
+        }
+
         $this->method  = $method;
         $this->url     = $url;
         $this->headers = $headers;
@@ -93,50 +104,5 @@ final class HttpRequest
     public function isPost(): bool
     {
         return 'POST' === $this->method;
-    }
-
-    /**
-     * Receive request http method
-     *
-     * @return string
-     */
-    public function httpMethod(): string
-    {
-        return $this->method;
-    }
-
-    /**
-     * Receive endpoint URL
-     *
-     * @return string
-     */
-    public function url(): string
-    {
-        return $this->url;
-    }
-
-    /**
-     * Receive request headers
-     *
-     * @return array
-     */
-    public function headers(): array
-    {
-        if($this->body instanceof FormBody)
-        {
-            return $this->body->headers();
-        }
-
-        return $this->headers;
-    }
-
-    /**
-     * Receive request body
-     *
-     * @return FormBody|string|null
-     */
-    public function body()
-    {
-        return $this->body;
     }
 }

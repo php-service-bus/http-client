@@ -11,17 +11,15 @@
 declare(strict_types = 1);
 
 use Amp\Loop;
-use ServiceBus\HttpClient\Artax\ArtaxHttpClient;
+use function ServiceBus\HttpClient\Artax\downloadFile;
 
 include __DIR__ . '/../vendor/autoload.php';
 
-$client = new ArtaxHttpClient();
-
 Loop::run(
-    static function() use ($client)
+    static function()
     {
         /** @var string $filePath */
-        $filePath = yield $client->download(
+        $filePath = yield downloadFile(
             'https://github.com/mmasiukevich/service-bus/archive/master.zip',
             \sys_get_temp_dir(),
             'service_bus.zip'

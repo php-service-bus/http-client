@@ -14,6 +14,7 @@ namespace ServiceBus\HttpClient\Tests\Artax;
 
 use function Amp\Promise\wait;
 use ServiceBus\HttpClient\Artax\ArtaxHttpClient;
+use function ServiceBus\HttpClient\Artax\downloadFile;
 use ServiceBus\HttpClient\HttpRequest;
 use PHPUnit\Framework\TestCase;
 
@@ -51,7 +52,7 @@ final class ArtaxHttpClientSmokeTest extends TestCase
             \unlink($tmpFilePath);
         }
 
-        $filePath = wait((new ArtaxHttpClient())->download(
+        $filePath = wait(downloadFile(
             'https://github.com/mmasiukevich/http-client/archive/master.zip',
             \sys_get_temp_dir(),
             'master.zip'

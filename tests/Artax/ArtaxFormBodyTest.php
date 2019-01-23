@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * PHP Service Bus Http client component
+ *
+ * @author  Maksim Masiukevich <dev@async-php.com>
+ * @license MIT
+ * @license https://opensource.org/licenses/MIT
+ */
+
+declare(strict_types = 1);
+
+namespace ServiceBus\HttpClient\Tests\Artax;
+
+use function Amp\Promise\wait;
+use PHPUnit\Framework\TestCase;
+use ServiceBus\HttpClient\Artax\ArtaxFormBody;
+use ServiceBus\HttpClient\InputFilePath;
+
+/**
+ *
+ */
+final class ArtaxFormBodyTest extends TestCase
+{
+    /**
+     * @test
+     *
+     * @return void
+     *
+     * @throws \Throwable
+     */
+    public function addFile(): void
+    {
+        $formBody = new ArtaxFormBody();
+        $formBody->addFile('someField', new InputFilePath(__FILE__));
+
+        $headers = $formBody->headers();
+
+        static::assertArrayHasKey('Content-Type', $headers);
+        static::assertSame('multipart/form-data', \explode(';', $headers['Content-Type'])[0]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     *
+     * @throws \Throwable
+     */
+    public function fromParametersWithFile(): void
+    {
+        $formBody = ArtaxFormBody::fromParameters([
+            'simpleField' => 'simpleValue',
+            'fileField'   => new InputFilePath(__FILE__)
+        ]);
+
+        $headers = $formBody->headers();
+
+        static::assertArrayHasKey('Content-Type', $headers);
+        static::assertSame('multipart/form-data', \explode(';', $headers['Content-Type'])[0]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     *
+     * @throws \Throwable
+     */
+    public function fromParameters(): void
+    {
+        $formBody = ArtaxFormBody::fromParameters(['simpleField' => 'simpleValue']);
+        $headers  = $formBody->headers();
+
+        static::assertArrayHasKey('Content-Type', $headers);
+        static::assertSame('application/x-www-form-urlencoded', $headers['Content-Type']);
+
+        static::assertSame(23, wait($formBody->getBodyLength()));
+    }
+}

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP Service Bus (publish-subscribe pattern) Http client component
+ * PHP Service Bus Http client component
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -19,7 +19,6 @@ use function Amp\File\open;
 use function Amp\File\rename;
 use Amp\File\StatCache;
 use Amp\Promise;
-use ServiceBus\HttpClient\Exception as HttpClientExceptions;
 use ServiceBus\HttpClient\HttpClient;
 use ServiceBus\HttpClient\HttpRequest;
 use Psr\Log\LoggerInterface;
@@ -31,13 +30,6 @@ use GuzzleHttp\Psr7\Response as Psr7Response;
  */
 final class ArtaxHttpClient implements HttpClient
 {
-    private const EXCEPTIONS_MAPPING = [
-        Artax\DnsException::class     => HttpClientExceptions\DnsResolveFailed::class,
-        Artax\SocketException::class  => HttpClientExceptions\ConnectionFailed::class,
-        Artax\ParseException::class   => HttpClientExceptions\IncorrectParameters::class,
-        Artax\TimeoutException::class => HttpClientExceptions\RequestTimeoutReached::class
-    ];
-
     /**
      * Artax http client
      *
@@ -128,7 +120,7 @@ final class ArtaxHttpClient implements HttpClient
                 }
                 catch(\Throwable $throwable)
                 {
-                    throw self::adaptThrowable($throwable);
+                    throw adaptArtaxThrowable($throwable);
                 }
             },
             $filePath, $destinationDirectory, $fileName
@@ -198,7 +190,7 @@ final class ArtaxHttpClient implements HttpClient
 
         try
         {
-            self::logRequest($logger, $request, $requestId);
+            logArtaxRequest($logger, $request, $requestId);
 
             /** @var Artax\Response $artaxResponse */
             $artaxResponse = yield $client->request($request);
@@ -208,15 +200,15 @@ final class ArtaxHttpClient implements HttpClient
 
             unset($artaxResponse);
 
-            self::logResponse($logger, $response, $requestId);
+            logArtaxResponse($logger, $response, $requestId);
 
             return $response;
         }
         catch(\Throwable $throwable)
         {
-            self::logThrowable($logger, $throwable, $requestId);
+            logArtaxThrowable($logger, $throwable, $requestId);
 
-            throw self::adaptThrowable($throwable);
+            throw adaptArtaxThrowable($throwable);
         }
     }
 
@@ -241,87 +233,6 @@ final class ArtaxHttpClient implements HttpClient
             $responseBody,
             $response->getProtocolVersion(),
             $response->getReason()
-        );
-    }
-
-    /**
-     * @param \Throwable $throwable
-     *
-     * @return \Throwable
-     */
-    private static function adaptThrowable(\Throwable $throwable): \Throwable
-    {
-        $exceptionClass = \get_class($throwable);
-
-        if(true === isset(self::EXCEPTIONS_MAPPING[$exceptionClass]))
-        {
-            /** @var class-string<\Exception> $exceptionClass */
-            $exceptionClass = self::EXCEPTIONS_MAPPING[$exceptionClass];
-
-            return new $exceptionClass($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
-        }
-
-        return new HttpClientExceptions\HttpClientException(
-            $throwable->getMessage(),
-            (int) $throwable->getCode(),
-            $throwable
-        );
-    }
-
-    /**
-     * @param LoggerInterface $logger
-     * @param Artax\Request   $request
-     * @param string          $requestId
-     *
-     * @return void
-     */
-    private static function logRequest(LoggerInterface $logger, Artax\Request $request, string $requestId): void
-    {
-        $logger->debug(
-            'Request: [{requestMethod}] {requestUri} {requestHeaders}', [
-                'requestMethod'  => $request->getMethod(),
-                'requestUri'     => $request->getUri(),
-                'requestHeaders' => $request->getHeaders(),
-                'requestId'      => $requestId
-            ]
-        );
-    }
-
-    /**
-     * @param LoggerInterface $logger
-     * @param Psr7Response    $response
-     * @param string          $requestId
-     *
-     * @return void
-     */
-    private static function logResponse(LoggerInterface $logger, Psr7Response $response, string $requestId): void
-    {
-        $logger->debug(
-            'Response: {responseHttpCode} {responseContent} {responseHeaders}', [
-                'responseHttpCode' => $response->getStatusCode(),
-                'responseContent'  => (string) $response->getBody(),
-                'responseHeaders'  => $response->getHeaders(),
-                'requestId'        => $requestId
-            ]
-        );
-    }
-
-    /**
-     * @param LoggerInterface $logger
-     * @param \Throwable      $throwable
-     * @param string          $requestId
-     *
-     * @return void
-     */
-    private static function logThrowable(LoggerInterface $logger, \Throwable $throwable, string $requestId): void
-    {
-        $logger->error(
-            'During the execution of the request with identifier "{requestId}" an exception was caught: "{throwableMessage}"',
-            [
-                'requestId'        => $requestId,
-                'throwableMessage' => $throwable->getMessage(),
-                'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine())
-            ]
         );
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "php-service-bus/http-client",
-  "description": "PHP Service Bus (publish-subscribe pattern) Http client component",
+  "description": "PHP Service Bus Http client component",
   "type": "library",
   "keywords": ["cqrs", "event-sourcing", "async-php", "command-bus", "messaging"],
   "authors": [
@@ -15,12 +15,18 @@
   "autoload": {
     "psr-4": {
       "ServiceBus\\HttpClient\\": "src/"
-    }
+    },
+    "files": [
+      "src/Artax/functions.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
       "ServiceBus\\HttpClient\\Tests\\": "tests/"
-    }
+    },
+    "files": [
+      "src/Artax/functions.php"
+    ]
   },
   "require": {
     "php": ">=7.2",

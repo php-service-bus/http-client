@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP Service Bus (publish-subscribe pattern) Http client component
+ * PHP Service Bus Http client component
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT

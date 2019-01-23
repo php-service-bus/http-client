@@ -41,7 +41,7 @@ class HttpRequest
      *
      * @var array<string, string|int|float>
      */
-    private $headers;
+    public $headers;
 
     /**
      * Request payload

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP Service Bus Http client component
+ * Abstraction over Http client implementations
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT

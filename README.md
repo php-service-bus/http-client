@@ -4,7 +4,7 @@
 
 ## What is it?
 
-Abstraction over Http client implementations for use in [service-bus](https://github.com/php-service-bus/service-bus) framework.
+Abstraction over Http client implementations.
 
 ## Usage
 

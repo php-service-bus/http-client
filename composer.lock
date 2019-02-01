@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "08c74e2af8902b2b74867734698bb880",
-    "content-hash": "e2e032963f0b1e9751cd0ea291ef57f2",
+    "hash": "ce5208ca470a21e4135dca15d6092496",
+    "content-hash": "7eae5c21c3f8012acadd9218bc2b003e",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1066,16 +1066,16 @@
     "packages-dev": [
         {
             "name": "composer/xdebug-handler",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "dc523135366eb68f22268d069ea7749486458562"
+                "reference": "d17708133b6c276d6e42ef887a877866b909d892"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/dc523135366eb68f22268d069ea7749486458562",
-                "reference": "dc523135366eb68f22268d069ea7749486458562",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/d17708133b6c276d6e42ef887a877866b909d892",
+                "reference": "d17708133b6c276d6e42ef887a877866b909d892",
                 "shasum": ""
             },
             "require": {
@@ -1106,7 +1106,7 @@
                 "Xdebug",
                 "performance"
             ],
-            "time": "2018-11-29 10:59:02"
+            "time": "2019-01-28 20:25:53"
         },
         {
             "name": "doctrine/instantiator",
@@ -2118,16 +2118,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.2",
+            "version": "7.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944"
+                "reference": "2cb759721e53bc05f56487f628c6b9fbb6c18746"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7c89093bd00f7d5ddf0ab81dee04f801416b4944",
-                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2cb759721e53bc05f56487f628c6b9fbb6c18746",
+                "reference": "2cb759721e53bc05f56487f628c6b9fbb6c18746",
                 "shasum": ""
             },
             "require": {
@@ -2198,7 +2198,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-01-15 08:19:08"
+            "time": "2019-02-01 05:24:07"
         },
         {
             "name": "sabre/event",
@@ -2427,28 +2427,31 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "4.0.1",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f"
+                "reference": "6fda8ce1974b62b14935adc02a9ed38252eca656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/febd209a219cea7b56ad799b30ebbea34b71eb8f",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6fda8ce1974b62b14935adc02a9ed38252eca656",
+                "reference": "6fda8ce1974b62b14935adc02a9ed38252eca656",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.4"
+                "phpunit/phpunit": "^7.5"
+            },
+            "suggest": {
+                "ext-posix": "*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    "dev-master": "4.1-dev"
                 }
             },
             "autoload": {
@@ -2473,7 +2476,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-11-25 09:31:21"
+            "time": "2019-02-01 05:27:49"
         },
         {
             "name": "sebastian/exporter",
@@ -3119,16 +3122,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.0.12",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "279912cb5566c4b5394af9ac4f8cbd8c9a2b9450"
+                "reference": "53756e7017cd250b80edbc377a2fa64cd89f9461"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/279912cb5566c4b5394af9ac4f8cbd8c9a2b9450",
-                "reference": "279912cb5566c4b5394af9ac4f8cbd8c9a2b9450",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/53756e7017cd250b80edbc377a2fa64cd89f9461",
+                "reference": "53756e7017cd250b80edbc377a2fa64cd89f9461",
                 "shasum": ""
             },
             "require": {
@@ -3192,7 +3195,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-01-20 17:50:47"
+            "time": "2019-02-01 02:18:00"
         },
         {
             "name": "webmozart/assert",
@@ -3341,7 +3344,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "vimeo/psalm": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP Service Bus Http client component
+ * Abstraction over Http client implementations
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -51,9 +51,9 @@ class HttpRequest
     public $body;
 
     /**
-     * @param string $url
-     * @param array  $queryParameters
-     * @param array  $headers
+     * @param string                          $url
+     * @param array<string, string|int|float> $queryParameters
+     * @param array<string, string|int|float> $headers
      *
      * @return self
      */
@@ -65,9 +65,9 @@ class HttpRequest
     }
 
     /**
-     * @param string          $url
-     * @param FormBody|string $body
-     * @param array           $headers
+     * @param string                          $url
+     * @param FormBody|string                 $body
+     * @param array<string, string|int|float> $headers
      *
      * @return self
      */
@@ -77,10 +77,10 @@ class HttpRequest
     }
 
     /**
-     * @param string               $method
-     * @param string               $url
-     * @param array                $headers
-     * @param FormBody|string|null $body
+     * @param string                          $method
+     * @param string                          $url
+     * @param array<string, string|int|float> $headers
+     * @param FormBody|string|null            $body
      */
     private function __construct(string $method, string $url, array $headers = [], $body = null)
     {

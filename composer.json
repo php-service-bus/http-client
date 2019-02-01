@@ -1,8 +1,12 @@
 {
   "name": "php-service-bus/http-client",
-  "description": "PHP Service Bus Http client component",
+  "description": "Abstraction over Http client implementations",
   "type": "library",
-  "keywords": ["cqrs", "event-sourcing", "async-php", "command-bus", "messaging"],
+  "keywords": [
+    "async-php",
+    "command-bus",
+    "messaging"
+  ],
   "authors": [
     {
       "name": "Masiukevich Maksim",
@@ -36,7 +40,7 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^7",
-    "vimeo/psalm": "^3"
+    "vimeo/psalm": "dev-master"
   },
   "prefer-stable": true,
   "minimum-stability": "dev",

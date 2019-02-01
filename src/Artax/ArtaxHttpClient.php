@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP Service Bus Http client component
+ * Abstraction over Http client implementations
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -65,6 +65,8 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
+     * @psalm-suppress MixedTypeCoercion
+     *
      * @inheritdoc
      */
     public function execute(HttpRequest $requestData): Promise
@@ -84,6 +86,8 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
+     * @psalm-suppress MixedTypeCoercion
+     *
      * @inheritdoc
      */
     public function download(string $filePath, string $destinationDirectory, string $fileName): Promise

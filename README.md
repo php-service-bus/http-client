@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/php-service-bus/http-client.svg?branch=master)](https://travis-ci.org/php-service-bus/http-client)
-[![Code Coverage](https://scrutinizer-ci.com/g/php-service-bus/http-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/php-service-bus/http-client/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/php-service-bus/http-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/php-service-bus/http-client/?branch=master)
+[![Build Status](https://travis-ci.org/php-service-bus/http-client.svg?branch=v3.0)](https://travis-ci.org/php-service-bus/http-client)
+[![Code Coverage](https://scrutinizer-ci.com/g/php-service-bus/http-client/badges/coverage.png?b=v3.0)](https://scrutinizer-ci.com/g/php-service-bus/http-client/?branch=v3.0)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/php-service-bus/http-client/badges/quality-score.png?b=v3.0)](https://scrutinizer-ci.com/g/php-service-bus/http-client/?branch=v3.0)
 
 ## What is it?
 
@@ -8,7 +8,7 @@ Abstraction over Http client implementations.
 
 ## Usage
 
-Request parameters are formed using the [HttpRequest](https://github.com/php-service-bus/http-client/blob/master/src/HttpRequest.php) structure. The http request execution adapter must implement the [HttpClient](https://github.com/php-service-bus/http-client/blob/master/src/HttpClient.php) interface
+Request parameters are formed using the [HttpRequest](https://github.com/php-service-bus/http-client/blob/v3.0/src/HttpRequest.php) structure. The http request execution adapter must implement the [HttpClient](https://github.com/php-service-bus/http-client/blob/v3.0/src/HttpClient.php) interface
 
 ## Examples:
 
@@ -37,7 +37,7 @@ Loop::run(
     {
         /** @var string $filePath */
         $filePath = yield $client->download(
-            'https://github.com/mmasiukevich/service-bus/archive/master.zip',
+            'https://github.com/mmasiukevich/service-bus/archive/v3.0.zip',
             \sys_get_temp_dir(),
             'service_bus.zip'
         );
@@ -53,7 +53,7 @@ Loop::run(
     {
         /** @var string $filePath */
         $filePath = yield downloadFile(
-            'https://github.com/mmasiukevich/service-bus/archive/master.zip',
+            'https://github.com/mmasiukevich/service-bus/archive/v3.0.zip',
             \sys_get_temp_dir(),
             'service_bus.zip'
         );

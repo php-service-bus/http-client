@@ -71,7 +71,7 @@ final class ArtaxHttpClient implements HttpClient
      */
     public function execute(HttpRequest $requestData): Promise
     {
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             function(HttpRequest $requestData): \Generator
             {
@@ -94,7 +94,7 @@ final class ArtaxHttpClient implements HttpClient
     {
         $client = $this->handler;
 
-        /** @psalm-suppress InvalidArgument Incorrect psalm unpack parameters (...$args) */
+        /** @psalm-suppress InvalidArgument */
         return call(
             static function(string $filePath, string $destinationDirectory, string $fileName) use ($client): \Generator
             {

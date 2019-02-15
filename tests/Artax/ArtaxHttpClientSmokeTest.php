@@ -15,6 +15,8 @@ namespace ServiceBus\HttpClient\Tests\Artax;
 use function Amp\Promise\wait;
 use ServiceBus\HttpClient\Artax\ArtaxHttpClient;
 use function ServiceBus\HttpClient\Artax\downloadFile;
+use ServiceBus\HttpClient\Exception\DnsResolveFailed;
+use ServiceBus\HttpClient\Exception\HttpClientException;
 use ServiceBus\HttpClient\HttpRequest;
 use PHPUnit\Framework\TestCase;
 
@@ -25,7 +27,6 @@ final class ArtaxHttpClientSmokeTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \ServiceBus\HttpClient\Exception\HttpClientException
      *
      * @return void
      *
@@ -33,6 +34,8 @@ final class ArtaxHttpClientSmokeTest extends TestCase
      */
     public function requestWithEmptyURL(): void
     {
+        $this->expectException(HttpClientException::class);
+
         wait((new ArtaxHttpClient())->execute(HttpRequest::get('')));
     }
 
@@ -82,7 +85,6 @@ final class ArtaxHttpClientSmokeTest extends TestCase
 
     /**
      * @test
-     * @expectedException \ServiceBus\HttpClient\Exception\DnsResolveFailed
      *
      * @return void
      *
@@ -90,6 +92,8 @@ final class ArtaxHttpClientSmokeTest extends TestCase
      */
     public function wrongDomain(): void
     {
+        $this->expectException(DnsResolveFailed::class);
+
         wait((new ArtaxHttpClient())->execute(HttpRequest::get('https://segdsgrxdrgdrg.vfs')));
     }
 }

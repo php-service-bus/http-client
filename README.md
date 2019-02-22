@@ -1,65 +1,26 @@
+## What is it?
 [![Build Status](https://travis-ci.org/php-service-bus/http-client.svg?branch=v3.0)](https://travis-ci.org/php-service-bus/http-client)
 [![Code Coverage](https://scrutinizer-ci.com/g/php-service-bus/http-client/badges/coverage.png?b=v3.0)](https://scrutinizer-ci.com/g/php-service-bus/http-client/?branch=v3.0)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/php-service-bus/http-client/badges/quality-score.png?b=v3.0)](https://scrutinizer-ci.com/g/php-service-bus/http-client/?branch=v3.0)
 
-## What is it?
+This component is part of the [PHP Service Bus](https://github.com/php-service-bus/service-bus)
 
 Abstraction over Http client implementations.
 
-## Usage
+## Documentation
+[HTTP Client](https://github.com/php-service-bus/documentation/blob/master/pages/packages/http_client.md)
 
-Request parameters are formed using the [HttpRequest](https://github.com/php-service-bus/http-client/blob/v3.0/src/HttpRequest.php) structure. The http request execution adapter must implement the [HttpClient](https://github.com/php-service-bus/http-client/blob/v3.0/src/HttpClient.php) interface
+## Support
+* [Telegram chat (RU)](https://t.me/php_service_bus)
+* Create issue [https://github.com/php-service-bus/service-bus/issues](https://github.com/php-service-bus/service-bus/issues)
 
-## Examples:
+## Contacts
+* [`dev@async-php.com`](mailto:dev@async-php.com)
 
-#### Simple GET request (using [Artax](https://github.com/amphp/artax)):
-```php
-$client = new ArtaxHttpClient();
+## Security
 
-Loop::run(
-    static function() use ($client)
-    {
-        /** @var \GuzzleHttp\Psr7\Response $response */
-        $response = yield $client->execute(HttpRequest::get('https://github.com/php-service-bus/'));
+If you discover any security related issues, please email [`dev@async-php.com`](mailto:dev@async-php.com) instead of using the issue tracker.
 
-        echo $response->getStatusCode();
-    }
-);
-```
+## License
 
-#### File download (using [Artax](https://github.com/amphp/artax)):
-
-```php
-$client = new ArtaxHttpClient();
-
-Loop::run(
-    static function() use ($client)
-    {
-        /** @var string $filePath */
-        $filePath = yield $client->download(
-            'https://github.com/mmasiukevich/service-bus/archive/v3.0.zip',
-            \sys_get_temp_dir(),
-            'service_bus.zip'
-        );
-
-        echo $filePath;
-    }
-);
-```
-Or
-```php
-Loop::run(
-    static function()
-    {
-        /** @var string $filePath */
-        $filePath = yield downloadFile(
-            'https://github.com/mmasiukevich/service-bus/archive/v3.0.zip',
-            \sys_get_temp_dir(),
-            'service_bus.zip'
-        );
-
-        echo $filePath;
-    }
-);
-```
-
+The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.

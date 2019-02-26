@@ -23,7 +23,9 @@ interface FormBody
     /**
      * Create from form parameters
      *
-     * @param array<string, string|array<string, string>> $fields
+     * @psalm-param array<string, string|array<string, string>> $fields
+     *
+     * @param array $fields
      *
      * @return static
      */
@@ -52,7 +54,9 @@ interface FormBody
     /**
      * Add multiple fields/files
      *
-     * @param array<string, string|int|float|InputFilePath> $fields
+     * @psalm-param array<string, string|int|float|InputFilePath> $fields
+     *
+     * @param array $fields
      *
      * @return void
      */
@@ -68,7 +72,9 @@ interface FormBody
     /**
      * Retrieve a key-value array of headers to add to the outbound request
      *
-     * @return array<string, string>
+     * @psalm-return array<string, string>
+     *
+     * @return array
      */
     public function headers(): array;
 

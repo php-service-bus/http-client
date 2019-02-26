@@ -39,7 +39,8 @@ class HttpRequest
     /**
      * Request headers
      *
-     * @var array<string, string|int|float>
+     * @psalm-var array<string, string|int|float>
+     * @var array
      */
     public $headers;
 
@@ -51,9 +52,12 @@ class HttpRequest
     public $body;
 
     /**
-     * @param string                          $url
-     * @param array<string, string|int|float> $queryParameters
-     * @param array<string, string|int|float> $headers
+     * @psalm-param array<string, string|int|float> $queryParameters
+     * @psalm-param array<string, string|int|float> $headers
+     *
+     * @param string $url
+     * @param array  $queryParameters
+     * @param array  $headers
      *
      * @return self
      */
@@ -65,9 +69,11 @@ class HttpRequest
     }
 
     /**
-     * @param string                          $url
-     * @param FormBody|string                 $body
-     * @param array<string, string|int|float> $headers
+     * @psalm-param array<string, string|int|float> $headers
+     *
+     * @param string          $url
+     * @param FormBody|string $body
+     * @param array           $headers
      *
      * @return self
      */
@@ -77,16 +83,18 @@ class HttpRequest
     }
 
     /**
-     * @param string                          $method
-     * @param string                          $url
-     * @param array<string, string|int|float> $headers
-     * @param FormBody|string|null            $body
+     * @psalm-param array<string, string|int|float> $headers
+     *
+     * @param string               $method
+     * @param string               $url
+     * @param array                $headers
+     * @param FormBody|string|null $body
      */
     private function __construct(string $method, string $url, array $headers = [], $body = null)
     {
         if($body instanceof FormBody)
         {
-            /** @var array<string, string|int|float> $headers */
+            /** @psalm-var array<string, string|int|float> $headers */
             $headers = \array_merge($body->headers(), $headers);
         }
 

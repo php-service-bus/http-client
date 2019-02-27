@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -19,26 +19,26 @@ use ServiceBus\HttpClient\FormBody;
 use ServiceBus\HttpClient\InputFilePath;
 
 /**
- * Artax form body implementation
+ * Artax form body implementation.
  */
 final class ArtaxFormBody implements FormBody
 {
     /**
-     * Original body object
+     * Original body object.
      *
      * @var AmpFormBody
      */
     private $original;
 
     /**
-     * Boundary
+     * Boundary.
      *
      * @var string
      */
     private $boundary;
 
     /**
-     * Is multipart request
+     * Is multipart request.
      *
      * @var bool
      */
@@ -54,7 +54,7 @@ final class ArtaxFormBody implements FormBody
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function fromParameters(array $fields): self
     {
@@ -65,7 +65,7 @@ final class ArtaxFormBody implements FormBody
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addFile(string $fieldName, InputFilePath $file): void
     {
@@ -74,7 +74,7 @@ final class ArtaxFormBody implements FormBody
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addField(string $fieldName, $value): void
     {
@@ -82,15 +82,15 @@ final class ArtaxFormBody implements FormBody
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function addMultiple(array $fields): void
     {
         /**
          * @var string                         $key
-         * @var string|float|int|InputFilePath $value
+         * @var float|InputFilePath|int|string $value
          */
-        foreach($fields as $key => $value)
+        foreach ($fields as $key => $value)
         {
             /** @psalm-suppress MixedArgument Incorrect processing of ternary operators */
             $value instanceof InputFilePath
@@ -100,7 +100,7 @@ final class ArtaxFormBody implements FormBody
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createBodyStream(): InputStream
     {
@@ -108,19 +108,19 @@ final class ArtaxFormBody implements FormBody
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function headers(): array
     {
         return [
             'Content-Type' => $this->isMultipart
                 ? \sprintf('multipart/form-data; boundary=%s', $this->boundary)
-                : 'application/x-www-form-urlencoded'
+                : 'application/x-www-form-urlencoded',
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getBodyLength(): Promise
     {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -13,39 +13,40 @@ declare(strict_types = 1);
 namespace ServiceBus\HttpClient;
 
 /**
- * Http request data
+ * Http request data.
  *
  * @property-read string                          $method
  * @property-read string                          $url
- * @property-read array<string, string|int|float> $headers
+ * @property-read array<string, float|int|string> $headers
  * @property-read FormBody|string|null            $body
  */
 class HttpRequest
 {
     /**
-     * Http method
+     * Http method.
      *
      * @var string
      */
     public $method;
 
     /**
-     * Request URL
+     * Request URL.
      *
      * @var string
      */
     public $url;
 
     /**
-     * Request headers
+     * Request headers.
      *
      * @psalm-var array<string, string|int|float>
+     *
      * @var array
      */
     public $headers;
 
     /**
-     * Request payload
+     * Request payload.
      *
      * @var FormBody|string|null
      */
@@ -92,7 +93,7 @@ class HttpRequest
      */
     private function __construct(string $method, string $url, array $headers = [], $body = null)
     {
-        if($body instanceof FormBody)
+        if ($body instanceof FormBody)
         {
             /** @psalm-var array<string, string|int|float> $headers */
             $headers = \array_merge($body->headers(), $headers);
@@ -105,7 +106,7 @@ class HttpRequest
     }
 
     /**
-     * Is POST request
+     * Is POST request.
      *
      * @return bool
      */

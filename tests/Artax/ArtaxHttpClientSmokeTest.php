@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -13,12 +13,12 @@ declare(strict_types = 1);
 namespace ServiceBus\HttpClient\Tests\Artax;
 
 use function Amp\Promise\wait;
-use ServiceBus\HttpClient\Artax\ArtaxHttpClient;
 use function ServiceBus\HttpClient\Artax\downloadFile;
+use PHPUnit\Framework\TestCase;
+use ServiceBus\HttpClient\Artax\ArtaxHttpClient;
 use ServiceBus\HttpClient\Exception\DnsResolveFailed;
 use ServiceBus\HttpClient\Exception\HttpClientException;
 use ServiceBus\HttpClient\HttpRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  *
@@ -28,9 +28,10 @@ final class ArtaxHttpClientSmokeTest extends TestCase
     /**
      * @test
      *
+     * @throws \Throwable
+     *
      * @return void
      *
-     * @throws \Throwable
      */
     public function requestWithEmptyURL(): void
     {
@@ -42,15 +43,16 @@ final class ArtaxHttpClientSmokeTest extends TestCase
     /**
      * @test
      *
+     * @throws \Throwable
+     *
      * @return void
      *
-     * @throws \Throwable
      */
     public function download(): void
     {
         $tmpFilePath = \sys_get_temp_dir() . '/master.zip';
 
-        if(true === \file_exists($tmpFilePath))
+        if (true === \file_exists($tmpFilePath))
         {
             \unlink($tmpFilePath);
         }
@@ -71,9 +73,10 @@ final class ArtaxHttpClientSmokeTest extends TestCase
     /**
      * @test
      *
+     * @throws \Throwable
+     *
      * @return void
      *
-     * @throws \Throwable
      */
     public function postRequest(): void
     {
@@ -86,9 +89,10 @@ final class ArtaxHttpClientSmokeTest extends TestCase
     /**
      * @test
      *
+     * @throws \Throwable
+     *
      * @return void
      *
-     * @throws \Throwable
      */
     public function wrongDomain(): void
     {

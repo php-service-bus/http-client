@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -16,12 +16,12 @@ use Amp\ByteStream\InputStream;
 use Amp\Promise;
 
 /**
- * Form data
+ * Form data.
  */
 interface FormBody
 {
     /**
-     * Create from form parameters
+     * Create from form parameters.
      *
      * @psalm-param array<string, string|array<string, string>> $fields
      *
@@ -32,7 +32,7 @@ interface FormBody
     public static function fromParameters(array $fields);
 
     /**
-     * Add a file field to the form entity body
+     * Add a file field to the form entity body.
      *
      * @param string        $fieldName
      * @param InputFilePath $file
@@ -42,17 +42,17 @@ interface FormBody
     public function addFile(string $fieldName, InputFilePath $file): void;
 
     /**
-     * Add a data field to the form entity body
+     * Add a data field to the form entity body.
      *
      * @param string               $fieldName
-     * @param string|integer|float $value
+     * @param float|integer|string $value
      *
      * @return void
      */
     public function addField(string $fieldName, $value): void;
 
     /**
-     * Add multiple fields/files
+     * Add multiple fields/files.
      *
      * @psalm-param array<string, string|int|float|InputFilePath> $fields
      *
@@ -63,14 +63,14 @@ interface FormBody
     public function addMultiple(array $fields): void;
 
     /**
-     * Create the HTTP message body to be sent
+     * Create the HTTP message body to be sent.
      *
      * @return InputStream
      */
     public function createBodyStream(): InputStream;
 
     /**
-     * Retrieve a key-value array of headers to add to the outbound request
+     * Retrieve a key-value array of headers to add to the outbound request.
      *
      * @psalm-return array<string, string>
      *
@@ -79,7 +79,7 @@ interface FormBody
     public function headers(): array;
 
     /**
-     * Retrieve the HTTP message body length. If not available, return -1
+     * Retrieve the HTTP message body length. If not available, return -1.
      *
      * @return Promise
      */

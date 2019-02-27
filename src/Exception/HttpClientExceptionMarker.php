@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -17,5 +17,4 @@ namespace ServiceBus\HttpClient\Exception;
  */
 interface HttpClientExceptionMarker
 {
-
 }

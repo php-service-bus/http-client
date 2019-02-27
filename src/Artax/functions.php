@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
 use ServiceBus\HttpClient\Exception as HttpClientExceptions;
 
 /**
- * Download file
+ * Download file.
  *
  * @api
  *
@@ -29,12 +29,13 @@ use ServiceBus\HttpClient\Exception as HttpClientExceptions;
  * @param string $toDirectory
  * @param string $withName
  *
- * @return Promise<string>
- *
  * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
  * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
  * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters
  * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
+ *
+ * @return Promise<string>
+ *
  */
 function downloadFile(string $url, string $toDirectory, string $withName): Promise
 {
@@ -53,11 +54,12 @@ function downloadFile(string $url, string $toDirectory, string $withName): Promi
 function logArtaxRequest(LoggerInterface $logger, Artax\Request $request, string $requestId): void
 {
     $logger->debug(
-        'Request: [{requestMethod}] {requestUri} {requestHeaders}', [
+        'Request: [{requestMethod}] {requestUri} {requestHeaders}',
+        [
             'requestMethod'  => $request->getMethod(),
             'requestUri'     => $request->getUri(),
             'requestHeaders' => $request->getHeaders(),
-            'requestId'      => $requestId
+            'requestId'      => $requestId,
         ]
     );
 }
@@ -74,11 +76,12 @@ function logArtaxRequest(LoggerInterface $logger, Artax\Request $request, string
 function logArtaxResponse(LoggerInterface $logger, Response $response, string $requestId): void
 {
     $logger->debug(
-        'Response: {responseHttpCode} {responseContent} {responseHeaders}', [
+        'Response: {responseHttpCode} {responseContent} {responseHeaders}',
+        [
             'responseHttpCode' => $response->getStatusCode(),
             'responseContent'  => (string) $response->getBody(),
             'responseHeaders'  => $response->getHeaders(),
-            'requestId'        => $requestId
+            'requestId'        => $requestId,
         ]
     );
 }
@@ -99,7 +102,7 @@ function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, strin
         [
             'requestId'        => $requestId,
             'throwableMessage' => $throwable->getMessage(),
-            'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine())
+            'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine()),
         ]
     );
 }
@@ -118,13 +121,13 @@ function adaptArtaxThrowable(\Throwable $throwable): \Throwable
         Artax\DnsException::class     => HttpClientExceptions\DnsResolveFailed::class,
         Artax\SocketException::class  => HttpClientExceptions\ConnectionFailed::class,
         Artax\ParseException::class   => HttpClientExceptions\IncorrectParameters::class,
-        Artax\TimeoutException::class => HttpClientExceptions\RequestTimeoutReached::class
+        Artax\TimeoutException::class => HttpClientExceptions\RequestTimeoutReached::class,
     ];
 
     /** @var class-string<\Amp\Artax\HttpException> $exceptionClass */
     $exceptionClass = \get_class($throwable);
 
-    if(true === isset($mapping[$exceptionClass]))
+    if (true === isset($mapping[$exceptionClass]))
     {
         /** @var class-string<\Exception> $exceptionClass */
         $exceptionClass = $mapping[$exceptionClass];

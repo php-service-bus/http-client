@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -12,33 +12,33 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
-use Amp\Artax;
 use function Amp\ByteStream\pipe;
 use function Amp\call;
 use function Amp\File\open;
 use function Amp\File\rename;
+use Amp\Artax;
 use Amp\File\StatCache;
 use Amp\Promise;
-use ServiceBus\HttpClient\HttpClient;
-use ServiceBus\HttpClient\HttpRequest;
+use GuzzleHttp\Psr7\Response as Psr7Response;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use GuzzleHttp\Psr7\Response as Psr7Response;
+use ServiceBus\HttpClient\HttpClient;
+use ServiceBus\HttpClient\HttpRequest;
 
 /**
- * Artax (amphp-based) http client
+ * Artax (amphp-based) http client.
  */
 final class ArtaxHttpClient implements HttpClient
 {
     /**
-     * Artax http client
+     * Artax http client.
      *
      * @var Artax\Client
      */
     private $handler;
 
     /**
-     * Logger instance
+     * Logger instance.
      *
      * @var LoggerInterface
      */
@@ -57,7 +57,7 @@ final class ArtaxHttpClient implements HttpClient
         $this->handler = $handler ?? new Artax\DefaultClient(new Artax\Cookie\ArrayCookieJar());
         $this->logger  = $logger ?? new NullLogger();
 
-        if($transferTimeout > 0 && true === \method_exists($this->handler, 'setOption'))
+        if ($transferTimeout > 0 && true === \method_exists($this->handler, 'setOption'))
         {
             /** @noinspection PhpUnhandledExceptionInspection */
             $this->handler->setOption(Artax\Client::OP_TRANSFER_TIMEOUT, $transferTimeout);
@@ -67,7 +67,7 @@ final class ArtaxHttpClient implements HttpClient
     /**
      * @psalm-suppress MixedTypeCoercion
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function execute(HttpRequest $requestData): Promise
     {
@@ -88,7 +88,7 @@ final class ArtaxHttpClient implements HttpClient
     /**
      * @psalm-suppress MixedTypeCoercion
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function download(string $filePath, string $destinationDirectory, string $fileName): Promise
     {
@@ -122,23 +122,26 @@ final class ArtaxHttpClient implements HttpClient
 
                     return $destinationFilePath;
                 }
-                catch(\Throwable $throwable)
+                catch (\Throwable $throwable)
                 {
                     throw adaptArtaxThrowable($throwable);
                 }
             },
-            $filePath, $destinationDirectory, $fileName
+            $filePath,
+            $destinationDirectory,
+            $fileName
         );
     }
 
     /**
-     * Handle GET query
+     * Handle GET query.
      *
      * @param HttpRequest $requestData
      *
+     * @throws \Throwable
+     *
      * @return \Generator<\GuzzleHttp\Psr7\Response>
      *
-     * @throws \Throwable
      */
     private function executeGet(HttpRequest $requestData): \Generator
     {
@@ -153,13 +156,14 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
-     * Execute POST request
+     * Execute POST request.
      *
      * @param HttpRequest $requestData
      *
+     * @throws \Throwable
+     *
      * @return \Generator<\GuzzleHttp\Psr7\Response>
      *
-     * @throws \Throwable
      */
     private function executePost(HttpRequest $requestData): \Generator
     {
@@ -184,9 +188,10 @@ final class ArtaxHttpClient implements HttpClient
      * @param Artax\Request   $request
      * @param LoggerInterface $logger
      *
+     * @throws \Throwable
+     *
      * @return \Generator<\GuzzleHttp\Psr7\Response>
      *
-     * @throws \Throwable
      */
     private static function doRequest(Artax\Client $client, Artax\Request $request, LoggerInterface $logger): \Generator
     {
@@ -208,7 +213,7 @@ final class ArtaxHttpClient implements HttpClient
 
             return $response;
         }
-        catch(\Throwable $throwable)
+        catch (\Throwable $throwable)
         {
             logArtaxThrowable($logger, $throwable, $requestId);
 

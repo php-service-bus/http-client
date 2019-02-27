@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -25,9 +25,10 @@ final class ArtaxFormBodyTest extends TestCase
     /**
      * @test
      *
+     * @throws \Throwable
+     *
      * @return void
      *
-     * @throws \Throwable
      */
     public function addFile(): void
     {
@@ -43,15 +44,16 @@ final class ArtaxFormBodyTest extends TestCase
     /**
      * @test
      *
+     * @throws \Throwable
+     *
      * @return void
      *
-     * @throws \Throwable
      */
     public function fromParametersWithFile(): void
     {
         $formBody = ArtaxFormBody::fromParameters([
             'simpleField' => 'simpleValue',
-            'fileField'   => new InputFilePath(__FILE__)
+            'fileField'   => new InputFilePath(__FILE__),
         ]);
 
         $headers = $formBody->headers();
@@ -63,9 +65,10 @@ final class ArtaxFormBodyTest extends TestCase
     /**
      * @test
      *
+     * @throws \Throwable
+     *
      * @return void
      *
-     * @throws \Throwable
      */
     public function fromParameters(): void
     {

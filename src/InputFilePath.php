@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstraction over Http client implementations
+ * Abstraction over Http client implementations.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -13,12 +13,12 @@ declare(strict_types = 1);
 namespace ServiceBus\HttpClient;
 
 /**
- * Input file path
+ * Input file path.
  */
 final class InputFilePath
 {
     /**
-     * Absolute file path
+     * Absolute file path.
      *
      * @var string
      */
@@ -41,7 +41,7 @@ final class InputFilePath
     }
 
     /**
-     * Get file name
+     * Get file name.
      *
      * @return string
      */

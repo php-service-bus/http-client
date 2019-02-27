@@ -10,17 +10,14 @@ Abstraction over Http client implementations.
 ## Documentation
 [HTTP Client](https://github.com/php-service-bus/documentation/blob/master/pages/packages/http_client.md)
 
-## Support
+## Contributing
+Contributions are welcome! Please read [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Communication Channels
+You can find help and discussion in the following places:
 * [Telegram chat (RU)](https://t.me/php_service_bus)
 * Create issue [https://github.com/php-service-bus/service-bus/issues](https://github.com/php-service-bus/service-bus/issues)
 
-## Contacts
-* [`dev@async-php.com`](mailto:dev@async-php.com)
-
-## Security
-
-If you discover any security related issues, please email [`dev@async-php.com`](mailto:dev@async-php.com) instead of using the issue tracker.
-
 ## License
 
-The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
+The MIT License (MIT). Please see [LICENSE](LICENSE.md) for more information.

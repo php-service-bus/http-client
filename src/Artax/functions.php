@@ -35,7 +35,6 @@ use ServiceBus\HttpClient\Exception as HttpClientExceptions;
  * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
  *
  * @return Promise<string>
- *
  */
 function downloadFile(string $url, string $toDirectory, string $withName): Promise
 {

@@ -141,7 +141,6 @@ final class ArtaxHttpClient implements HttpClient
      * @throws \Throwable
      *
      * @return \Generator<\GuzzleHttp\Psr7\Response>
-     *
      */
     private function executeGet(HttpRequest $requestData): \Generator
     {
@@ -163,7 +162,6 @@ final class ArtaxHttpClient implements HttpClient
      * @throws \Throwable
      *
      * @return \Generator<\GuzzleHttp\Psr7\Response>
-     *
      */
     private function executePost(HttpRequest $requestData): \Generator
     {
@@ -191,7 +189,6 @@ final class ArtaxHttpClient implements HttpClient
      * @throws \Throwable
      *
      * @return \Generator<\GuzzleHttp\Psr7\Response>
-     *
      */
     private static function doRequest(Artax\Client $client, Artax\Request $request, LoggerInterface $logger): \Generator
     {

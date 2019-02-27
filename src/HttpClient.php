@@ -30,7 +30,6 @@ interface HttpClient
      * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
      *
      * @return Promise<\GuzzleHttp\Psr7\Response>
-     *
      */
     public function execute(HttpRequest $requestData): Promise;
 
@@ -47,7 +46,6 @@ interface HttpClient
      * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
      *
      * @return Promise<string> Path to file
-     *
      */
     public function download(string $filePath, string $destinationDirectory, string $fileName): Promise;
 }

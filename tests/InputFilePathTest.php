@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP Service Bus Http client component
+ * PHP Service Bus Http client component.
  *
  * @author  Maksim Masiukevich <dev@async-php.com>
  * @license MIT
@@ -23,9 +23,9 @@ final class InputFilePathTest extends TestCase
     /**
      * @test
      *
-     * @return void
-     *
      * @throws \Throwable
+     *
+     * @return void
      */
     public function fileName(): void
     {

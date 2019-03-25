@@ -30,6 +30,8 @@ use ServiceBus\HttpClient\HttpRequest;
  */
 final class ArtaxHttpClient implements HttpClient
 {
+    private const DEFAULT_TRANSFER_TIMEOUT = 10000;
+
     /**
      * Artax http client.
      *
@@ -48,12 +50,14 @@ final class ArtaxHttpClient implements HttpClient
      * @noinspection PhpDocMissingThrowsInspection
      *
      * @param Artax\Client|null    $handler
-     * @param int                  $transferTimeout Transfer timeout in milliseconds until an HTTP request is
+     * @param int|null             $transferTimeout Transfer timeout in milliseconds until an HTTP request is
      *                                              automatically aborted, use 0 to disable
      * @param LoggerInterface|null $logger
      */
-    public function __construct(Artax\Client $handler = null, int $transferTimeout = 5000, LoggerInterface $logger = null)
+    public function __construct(Artax\Client $handler = null, ?int $transferTimeout = null, LoggerInterface $logger = null)
     {
+        $transferTimeout = $transferTimeout ?? self::DEFAULT_TRANSFER_TIMEOUT;
+
         $this->handler = $handler ?? new Artax\DefaultClient(new Artax\Cookie\ArrayCookieJar());
         $this->logger  = $logger ?? new NullLogger();
 

@@ -58,6 +58,8 @@ final class ArtaxFormBody implements FormBody
      */
     public static function fromParameters(array $fields): self
     {
+        /** @psalm-var array<string, string|array<string, string>> $fields */
+
         $self = new self();
         $self->addMultiple($fields);
 

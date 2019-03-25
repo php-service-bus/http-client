@@ -54,7 +54,7 @@ interface FormBody
     /**
      * Add multiple fields/files.
      *
-     * @psalm-param array<string, string|int|float|InputFilePath> $fields
+     * @psalm-param array<string, string|array<string, string>> $fields
      *
      * @param array $fields
      *

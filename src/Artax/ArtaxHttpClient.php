@@ -105,7 +105,9 @@ final class ArtaxHttpClient implements HttpClient
                 try
                 {
                     /** @var Artax\Response $response */
-                    $response         = yield $client->request(new Artax\Request($filePath));
+                    $response = yield $client->request(new Artax\Request($filePath));
+
+                    /** @var string $tmpDirectoryPath */
                     $tmpDirectoryPath = \tempnam(\sys_get_temp_dir(), 'artax-streaming-');
 
                     /** @var \Amp\File\Handle $tmpFile */

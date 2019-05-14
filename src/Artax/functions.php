@@ -115,7 +115,7 @@ function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, strin
  */
 function adaptArtaxThrowable(\Throwable $throwable): \Throwable
 {
-    /** @var array<class-string<\Amp\Artax\HttpException>, class-string<\Exception>> $mapping */
+    /** @psalm-var array<class-string<\Amp\Artax\HttpException>, class-string<\Exception>> $mapping */
     $mapping = [
         Artax\DnsException::class     => HttpClientExceptions\DnsResolveFailed::class,
         Artax\SocketException::class  => HttpClientExceptions\ConnectionFailed::class,
@@ -123,7 +123,7 @@ function adaptArtaxThrowable(\Throwable $throwable): \Throwable
         Artax\TimeoutException::class => HttpClientExceptions\RequestTimeoutReached::class,
     ];
 
-    /** @var class-string<\Amp\Artax\HttpException> $exceptionClass */
+    /** @psalm-var class-string<\Amp\Artax\HttpException> $exceptionClass */
     $exceptionClass = \get_class($throwable);
 
     if (true === isset($mapping[$exceptionClass]))

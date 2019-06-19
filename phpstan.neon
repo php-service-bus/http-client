@@ -1,8 +1,5 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#expects callable#'
-			path: %currentWorkingDirectory%/src
-		-
 			message: '#PHPDoc tag @return contains unresolvable type#'
 			path: %currentWorkingDirectory%/src

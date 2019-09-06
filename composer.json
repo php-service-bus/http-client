@@ -35,7 +35,7 @@
   "require": {
     "php": ">=7.3",
     "guzzlehttp/psr7": "v1.6.*",
-    "amphp/http-client": "v3.0.*",
+    "amphp/http-client": "v4.0.*",
     "psr/log": "v1.1.*"
   },
   "require-dev": {
@@ -45,7 +45,7 @@
     "phpstan/phpstan": "v0.11.*"
   },
   "prefer-stable": true,
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "scripts": {
     "psalm": "./vendor/bin/psalm --config=psalm.xml",
     "phpstan": "./vendor/bin/phpstan analyse src --level 7",

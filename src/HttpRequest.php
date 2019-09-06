@@ -14,16 +14,13 @@ namespace ServiceBus\HttpClient;
 
 /**
  * Http request data.
- *
- * @property-read string                          $method
- * @property-read string                          $url
- * @property-read array<string, float|int|string> $headers
- * @property-read FormBody|string|null            $body
  */
 class HttpRequest
 {
     /**
      * Http method.
+     *
+     * @readonly
      *
      * @var string
      */
@@ -32,6 +29,8 @@ class HttpRequest
     /**
      * Request URL.
      *
+     * @readonly
+     *
      * @var string
      */
     public $url;
@@ -39,7 +38,9 @@ class HttpRequest
     /**
      * Request headers.
      *
-     * @psalm-var array<string, string|int|float>
+     * @readonly
+     *
+     * @psalm-var array<string, array|string>
      *
      * @var array
      */
@@ -48,13 +49,15 @@ class HttpRequest
     /**
      * Request payload.
      *
+     * @readonly
+     *
      * @var FormBody|string|null
      */
     public $body;
 
     /**
      * @psalm-param array<string, string|int|float> $queryParameters
-     * @psalm-param array<string, string|int|float> $headers
+     * @psalm-param array<string, array|string> $headers
      *
      * @param string $url
      * @param array  $queryParameters
@@ -70,7 +73,7 @@ class HttpRequest
     }
 
     /**
-     * @psalm-param array<string, string|int|float> $headers
+     * @psalm-param array<string, string|array> $headers
      *
      * @param string          $url
      * @param FormBody|string $body
@@ -84,7 +87,7 @@ class HttpRequest
     }
 
     /**
-     * @psalm-param array<string, string|int|float> $headers
+     * @psalm-param array<string, string|array> $headers
      *
      * @param string               $method
      * @param string               $url
@@ -93,9 +96,9 @@ class HttpRequest
      */
     private function __construct(string $method, string $url, array $headers = [], $body = null)
     {
-        if ($body instanceof FormBody)
+        if($body instanceof FormBody)
         {
-            /** @psalm-var array<string, string|int|float> $headers */
+            /** @psalm-var array<string, string|array> $headers */
             $headers = \array_merge($body->headers(), $headers);
         }
 

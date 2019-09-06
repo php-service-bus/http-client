@@ -12,7 +12,12 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
-use Amp\Artax;
+use Amp\Dns\NoRecordException;
+use Amp\Http\Client\DnsException;
+use Amp\Http\Client\ParseException;
+use Amp\Http\Client\Request;
+use Amp\Http\Client\SocketException;
+use Amp\Http\Client\TimeoutException;
 use Amp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Log\LoggerInterface;
@@ -45,12 +50,12 @@ function downloadFile(string $url, string $toDirectory, string $withName): Promi
  * @internal
  *
  * @param LoggerInterface $logger
- * @param Artax\Request   $request
+ * @param Request         $request
  * @param string          $requestId
  *
  * @return void
  */
-function logArtaxRequest(LoggerInterface $logger, Artax\Request $request, string $requestId): void
+function logArtaxRequest(LoggerInterface $logger, Request $request, string $requestId): void
 {
     $logger->debug(
         'Request: [{requestMethod}] {requestUri} {requestHeaders}',
@@ -115,18 +120,19 @@ function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, strin
  */
 function adaptArtaxThrowable(\Throwable $throwable): \Throwable
 {
-    /** @psalm-var array<class-string<\Amp\Artax\HttpException>, class-string<\Exception>> $mapping */
+    /** @psalm-var array<class-string<\Amp\Http\Client\HttpException>, class-string<\Exception>> $mapping */
     $mapping = [
-        Artax\DnsException::class     => HttpClientExceptions\DnsResolveFailed::class,
-        Artax\SocketException::class  => HttpClientExceptions\ConnectionFailed::class,
-        Artax\ParseException::class   => HttpClientExceptions\IncorrectParameters::class,
-        Artax\TimeoutException::class => HttpClientExceptions\RequestTimeoutReached::class,
+        NoRecordException::class => HttpClientExceptions\DnsResolveFailed::class,
+        DnsException::class      => HttpClientExceptions\DnsResolveFailed::class,
+        SocketException::class   => HttpClientExceptions\ConnectionFailed::class,
+        ParseException::class    => HttpClientExceptions\IncorrectParameters::class,
+        TimeoutException::class  => HttpClientExceptions\RequestTimeoutReached::class,
     ];
 
-    /** @psalm-var class-string<\Amp\Artax\HttpException> $exceptionClass */
+    /** @psalm-var class-string<\Amp\Http\Client\HttpException> $exceptionClass */
     $exceptionClass = \get_class($throwable);
 
-    if (true === isset($mapping[$exceptionClass]))
+    if(true === isset($mapping[$exceptionClass]))
     {
         /** @var class-string<\Exception> $exceptionClass */
         $exceptionClass = $mapping[$exceptionClass];

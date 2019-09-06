@@ -58,7 +58,7 @@ final class ArtaxHttpClientSmokeTest extends TestCase
         }
 
         $filePath = wait(downloadFile(
-            'https://github.com/mmasiukevich/http-client/archive/master.zip',
+            'https://github.com/php-service-bus/http-client/archive/v3.3.0.zip',
             \sys_get_temp_dir(),
             'master.zip'
         ));
@@ -67,7 +67,7 @@ final class ArtaxHttpClientSmokeTest extends TestCase
         static::assertFileIsReadable($filePath);
         static::assertSame($tmpFilePath, $filePath);
 
-        \unlink($tmpFilePath);
+     //   \unlink($tmpFilePath);
     }
 
     /**

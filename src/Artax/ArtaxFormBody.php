@@ -12,7 +12,7 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
-use Amp\Artax\FormBody as AmpFormBody;
+use Amp\Http\Client\Body\FormBody as AmpFormBody;
 use Amp\ByteStream\InputStream;
 use Amp\Promise;
 use ServiceBus\HttpClient\FormBody;
@@ -91,7 +91,7 @@ final class ArtaxFormBody implements FormBody
          * @var string                         $key
          * @var float|InputFilePath|int|string $value
          */
-        foreach ($fields as $key => $value)
+        foreach($fields as $key => $value)
         {
             /** @psalm-suppress MixedArgument Incorrect processing of ternary operators */
             $value instanceof InputFilePath

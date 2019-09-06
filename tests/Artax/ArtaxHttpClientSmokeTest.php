@@ -67,7 +67,7 @@ final class ArtaxHttpClientSmokeTest extends TestCase
         static::assertFileIsReadable($filePath);
         static::assertSame($tmpFilePath, $filePath);
 
-     //   \unlink($tmpFilePath);
+        //   \unlink($tmpFilePath);
     }
 
     /**

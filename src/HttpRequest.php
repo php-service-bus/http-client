@@ -96,7 +96,7 @@ class HttpRequest
      */
     private function __construct(string $method, string $url, array $headers = [], $body = null)
     {
-        if($body instanceof FormBody)
+        if ($body instanceof FormBody)
         {
             /** @psalm-var array<string, string|array> $headers */
             $headers = \array_merge($body->headers(), $headers);

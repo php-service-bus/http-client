@@ -12,19 +12,19 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
-use Amp\Http\Client\Client;
-use Amp\Http\Client\Interceptor\FollowRedirects;
-use Amp\Http\Client\Request;
-use Amp\Http\Client\Response;
-use Amp\Http\Client\Connection\DefaultConnectionPool;
-use Amp\Socket\ConnectContext;
-use Amp\TimeoutCancellationToken;
 use function Amp\ByteStream\pipe;
 use function Amp\call;
 use function Amp\File\open;
 use function Amp\File\rename;
 use Amp\File\StatCache;
+use Amp\Http\Client\Client;
+use Amp\Http\Client\Connection\DefaultConnectionPool;
+use Amp\Http\Client\Interceptor\FollowRedirects;
+use Amp\Http\Client\Request;
+use Amp\Http\Client\Response;
 use Amp\Promise;
+use Amp\Socket\ConnectContext;
+use Amp\TimeoutCancellationToken;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -67,8 +67,8 @@ final class ArtaxHttpClient implements HttpClient
         $connectionContext = (new ConnectContext())->withConnectTimeout($transferTimeout);
 
         $this->handler = $httpClient ?? new Client(
-                new DefaultConnectionPool(null, $connectionContext)
-            );
+            new DefaultConnectionPool(null, $connectionContext)
+        );
 
         $this->logger = $logger ?? new NullLogger();
     }
@@ -137,7 +137,7 @@ final class ArtaxHttpClient implements HttpClient
 
                     return $destinationFilePath;
                 }
-                catch(\Throwable $throwable)
+                catch (\Throwable $throwable)
                 {
                     throw adaptArtaxThrowable($throwable);
                 }
@@ -165,7 +165,7 @@ final class ArtaxHttpClient implements HttpClient
          * @var string          $headerKey
          * @var string|string[] $value
          */
-        foreach($requestData->headers as $headerKey => $value)
+        foreach ($requestData->headers as $headerKey => $value)
         {
             $request->setHeader($headerKey, $value);
         }
@@ -202,7 +202,7 @@ final class ArtaxHttpClient implements HttpClient
          * @var string          $headerKey
          * @var string|string[] $value
          */
-        foreach($requestData->headers as $headerKey => $value)
+        foreach ($requestData->headers as $headerKey => $value)
         {
             $request->setHeader($headerKey, $value);
         }
@@ -245,7 +245,7 @@ final class ArtaxHttpClient implements HttpClient
 
             return $response;
         }
-        catch(\Throwable $throwable)
+        catch (\Throwable $throwable)
         {
             logArtaxThrowable($logger, $throwable, $requestId);
 

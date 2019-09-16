@@ -67,7 +67,7 @@ class HttpRequest
      */
     public static function get(string $url, array $queryParameters = [], array $headers = []): self
     {
-        if(\count($queryParameters) !== 0)
+        if (0 !== \count($queryParameters))
         {
             $url = \sprintf('%s?%s', \rtrim($url, '?'), \http_build_query($queryParameters));
         }
@@ -99,7 +99,7 @@ class HttpRequest
      */
     private function __construct(string $method, string $url, array $headers = [], $body = null)
     {
-        if($body instanceof FormBody)
+        if ($body instanceof FormBody)
         {
             /** @psalm-var array<string, string|array> $headers */
             $headers = \array_merge($body->headers(), $headers);

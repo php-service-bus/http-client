@@ -13,7 +13,7 @@ declare(strict_types = 1);
 namespace ServiceBus\HttpClient\Artax;
 
 use Amp\Dns\NoRecordException;
-use Amp\Http\Client\DnsException;
+use Amp\Dns\DnsException;
 use Amp\Http\Client\ParseException;
 use Amp\Http\Client\Request;
 use Amp\Http\Client\SocketException;

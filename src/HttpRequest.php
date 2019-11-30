@@ -14,42 +14,32 @@ namespace ServiceBus\HttpClient;
 
 /**
  * Http request data.
+ *
+ * @psalm-readonly
  */
 class HttpRequest
 {
     /**
      * Http method.
-     *
-     * @readonly
-     *
-     * @var string
      */
-    public $method;
+    public string $method;
 
     /**
      * Request URL.
-     *
-     * @readonly
-     *
-     * @var string
      */
-    public $url;
+    public string $url;
 
     /**
      * Request headers.
      *
-     * @readonly
-     *
      * @psalm-var array<string, array|string>
-     *
-     * @var array
      */
-    public $headers;
+    public array
+
+ $headers;
 
     /**
      * Request payload.
-     *
-     * @readonly
      *
      * @var FormBody|string|null
      */
@@ -58,12 +48,6 @@ class HttpRequest
     /**
      * @psalm-param array<string, string|int|float> $queryParameters
      * @psalm-param array<string, array|string> $headers
-     *
-     * @param string $url
-     * @param array  $queryParameters
-     * @param array  $headers
-     *
-     * @return self
      */
     public static function get(string $url, array $queryParameters = [], array $headers = []): self
     {
@@ -78,11 +62,7 @@ class HttpRequest
     /**
      * @psalm-param array<string, string|array> $headers
      *
-     * @param string          $url
      * @param FormBody|string $body
-     * @param array           $headers
-     *
-     * @return self
      */
     public static function post(string $url, $body, array $headers = []): self
     {
@@ -92,12 +72,9 @@ class HttpRequest
     /**
      * @psalm-param array<string, string|array> $headers
      *
-     * @param string               $method
-     * @param string               $url
-     * @param array                $headers
      * @param FormBody|string|null $body
      */
-    private function __construct(string $method, string $url, array $headers = [], $body = null)
+    public function __construct(string $method, string $url, array $headers = [], $body = null)
     {
         if ($body instanceof FormBody)
         {
@@ -113,8 +90,6 @@ class HttpRequest
 
     /**
      * Is POST request.
-     *
-     * @return bool
      */
     public function isPost(): bool
     {

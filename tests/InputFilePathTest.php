@@ -24,8 +24,6 @@ final class InputFilePathTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
      */
     public function fileName(): void
     {

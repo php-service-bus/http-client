@@ -22,8 +22,6 @@ interface HttpClient
     /**
      * Execute request.
      *
-     * @param HttpRequest $requestData
-     *
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
      * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
@@ -35,10 +33,6 @@ interface HttpClient
 
     /**
      * Download file.
-     *
-     * @param string $filePath
-     * @param string $destinationDirectory
-     * @param string $fileName
      *
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed

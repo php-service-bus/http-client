@@ -12,8 +12,8 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
-use Amp\Dns\NoRecordException;
 use Amp\Dns\DnsException;
+use Amp\Dns\NoRecordException;
 use Amp\Http\Client\ParseException;
 use Amp\Http\Client\Request;
 use Amp\Http\Client\SocketException;
@@ -49,19 +49,22 @@ function downloadFile(string $url, string $toDirectory, string $withName): Promi
 /**
  * @internal
  *
+ * @psalm-suppress InvalidReturnType
+ *
  * @param LoggerInterface $logger
  * @param Request         $request
  * @param string          $requestId
  *
- * @return void
+ * @return \Generator
  */
-function logArtaxRequest(LoggerInterface $logger, Request $request, string $requestId): void
+function logArtaxRequest(LoggerInterface $logger, Request $request, string $requestId): \Generator
 {
     $logger->debug(
         'Request: [{requestMethod}] {requestUri} {requestHeaders}',
         [
             'requestMethod'  => $request->getMethod(),
             'requestUri'     => $request->getUri(),
+            'requestContent' => yield $request->getBody()->createBodyStream()->read(),
             'requestHeaders' => $request->getHeaders(),
             'requestId'      => $requestId,
         ]

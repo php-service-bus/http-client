@@ -25,29 +25,19 @@ interface FormBody
      *
      * @psalm-param array<string, string|array<string, string>> $fields
      *
-     * @param array $fields
-     *
      * @return static
      */
     public static function fromParameters(array $fields);
 
     /**
      * Add a file field to the form entity body.
-     *
-     * @param string        $fieldName
-     * @param InputFilePath $file
-     *
-     * @return void
      */
     public function addFile(string $fieldName, InputFilePath $file): void;
 
     /**
      * Add a data field to the form entity body.
      *
-     * @param string               $fieldName
      * @param float|integer|string $value
-     *
-     * @return void
      */
     public function addField(string $fieldName, $value): void;
 
@@ -55,17 +45,11 @@ interface FormBody
      * Add multiple fields/files.
      *
      * @psalm-param array<string, string|array<string, string>> $fields
-     *
-     * @param array $fields
-     *
-     * @return void
      */
     public function addMultiple(array $fields): void;
 
     /**
      * Create the HTTP message body to be sent.
-     *
-     * @return InputStream
      */
     public function createBodyStream(): InputStream;
 
@@ -73,8 +57,6 @@ interface FormBody
      * Retrieve a key-value array of headers to add to the outbound request.
      *
      * @psalm-return array<string, string>
-     *
-     * @return array
      */
     public function headers(): array;
 

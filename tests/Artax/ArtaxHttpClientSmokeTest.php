@@ -29,9 +29,6 @@ final class ArtaxHttpClientSmokeTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
-     *
      */
     public function requestWithEmptyURL(): void
     {
@@ -44,9 +41,6 @@ final class ArtaxHttpClientSmokeTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
-     *
      */
     public function download(): void
     {
@@ -74,9 +68,6 @@ final class ArtaxHttpClientSmokeTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
-     *
      */
     public function postRequest(): void
     {
@@ -90,9 +81,6 @@ final class ArtaxHttpClientSmokeTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
-     *
      */
     public function wrongDomain(): void
     {

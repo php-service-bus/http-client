@@ -25,24 +25,18 @@ final class ArtaxFormBody implements FormBody
 {
     /**
      * Original body object.
-     *
-     * @var AmpFormBody
      */
-    private $original;
+    private AmpFormBody $original;
 
     /**
      * Boundary.
-     *
-     * @var string
      */
-    private $boundary;
+    private string $boundary;
 
     /**
      * Is multipart request.
-     *
-     * @var bool
      */
-    private $isMultipart;
+    private bool $isMultipart;
 
     public function __construct()
     {
@@ -71,7 +65,7 @@ final class ArtaxFormBody implements FormBody
     public function addFile(string $fieldName, InputFilePath $file): void
     {
         $this->isMultipart = true;
-        $this->original->addFile($fieldName, (string) $file);
+        $this->original->addFile($fieldName, $file->path);
     }
 
     /**

@@ -26,8 +26,6 @@ final class HttpRequestTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
      */
     public function createWithFormBody(): void
     {

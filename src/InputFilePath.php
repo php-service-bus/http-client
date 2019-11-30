@@ -19,31 +19,16 @@ final class InputFilePath
 {
     /**
      * Absolute file path.
-     *
-     * @var string
      */
-    private $path;
+    public string $path;
 
-    /**
-     * @param string $path
-     */
     public function __construct(string $path)
     {
         $this->path = $path;
     }
 
     /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->path;
-    }
-
-    /**
      * Get file name.
-     *
-     * @return string
      */
     public function fileName(): string
     {

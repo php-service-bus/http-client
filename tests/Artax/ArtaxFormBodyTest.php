@@ -26,9 +26,6 @@ final class ArtaxFormBodyTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
-     *
      */
     public function addFile(): void
     {
@@ -45,9 +42,6 @@ final class ArtaxFormBodyTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
-     *
      */
     public function fromParametersWithFile(): void
     {
@@ -66,9 +60,6 @@ final class ArtaxFormBodyTest extends TestCase
      * @test
      *
      * @throws \Throwable
-     *
-     * @return void
-     *
      */
     public function fromParameters(): void
     {

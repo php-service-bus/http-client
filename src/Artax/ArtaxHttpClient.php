@@ -65,7 +65,7 @@ final class ArtaxHttpClient implements HttpClient
     {
         /** @psalm-suppress InvalidArgument */
         return call(
-            function(HttpRequest $requestData): \Generator
+            function (HttpRequest $requestData): \Generator
             {
                 $generator = 'GET' === $requestData->method
                     ? $this->executeGet($requestData)
@@ -88,7 +88,7 @@ final class ArtaxHttpClient implements HttpClient
 
         /** @psalm-suppress InvalidArgument */
         return call(
-            static function(string $filePath, string $destinationDirectory, string $fileName) use ($client): \Generator
+            static function (string $filePath, string $destinationDirectory, string $fileName) use ($client): \Generator
             {
                 try
                 {

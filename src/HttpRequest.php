@@ -34,9 +34,7 @@ class HttpRequest
      *
      * @psalm-var array<string, array|string>
      */
-    public array
-
- $headers;
+    public array  $headers;
 
     /**
      * Request payload.

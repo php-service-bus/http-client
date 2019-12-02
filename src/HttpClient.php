@@ -22,24 +22,24 @@ interface HttpClient
     /**
      * Execute request.
      *
+     * Returns \GuzzleHttp\Psr7\Response
+     *
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
      * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
      * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
-     *
-     * @return Promise<\GuzzleHttp\Psr7\Response>
      */
     public function execute(HttpRequest $requestData): Promise;
 
     /**
      * Download file.
      *
+     * Returns Path to file
+     *
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
      * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
      * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
-     *
-     * @return Promise<string> Path to file
      */
     public function download(string $filePath, string $destinationDirectory, string $fileName): Promise;
 }

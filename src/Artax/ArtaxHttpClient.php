@@ -57,13 +57,10 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
-     * @psalm-suppress MixedTypeCoercion
-     *
      * {@inheritdoc}
      */
     public function execute(HttpRequest $requestData): Promise
     {
-        /** @psalm-suppress InvalidArgument */
         return call(
             function (HttpRequest $requestData): \Generator
             {
@@ -78,15 +75,12 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
-     * @psalm-suppress MixedTypeCoercion
-     *
      * {@inheritdoc}
      */
     public function download(string $filePath, string $destinationDirectory, string $fileName): Promise
     {
         $client = $this->handler;
 
-        /** @psalm-suppress InvalidArgument */
         return call(
             static function (string $filePath, string $destinationDirectory, string $fileName) use ($client): \Generator
             {
@@ -136,10 +130,6 @@ final class ArtaxHttpClient implements HttpClient
 
     /**
      * Handle GET query.
-     *
-     * @throws \Throwable
-     *
-     * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
     private function executeGet(HttpRequest $requestData): \Generator
     {
@@ -163,10 +153,6 @@ final class ArtaxHttpClient implements HttpClient
 
     /**
      * Execute POST request.
-     *
-     * @throws \Throwable
-     *
-     * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
     private function executePost(HttpRequest $requestData): \Generator
     {
@@ -193,11 +179,7 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
-     * @psalm-suppress InvalidReturnType Incorrect resolving the value of the generator
-     *
      * @throws \Throwable
-     *
-     * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
     private static function doRequest(AmphpHttpClient $client, Request $request, LoggerInterface $logger): \Generator
     {
@@ -235,9 +217,7 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
-     * @psalm-suppress InvalidReturnType Incorrect resolving the value of the generator
-     *
-     * @return \Generator<\GuzzleHttp\Psr7\Response>
+     * @psalm-suppress InvalidReturnType
      */
     private static function adaptResponse(Response $response): \Generator
     {

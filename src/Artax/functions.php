@@ -28,18 +28,10 @@ use ServiceBus\HttpClient\Exception as HttpClientExceptions;
  *
  * @api
  *
- * @psalm-suppress MixedTypeCoercion
- *
- * @param string $url
- * @param string $toDirectory
- * @param string $withName
- *
  * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
  * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
  * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters
  * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
- *
- * @return Promise<string>
  */
 function downloadFile(string $url, string $toDirectory, string $withName): Promise
 {
@@ -47,15 +39,9 @@ function downloadFile(string $url, string $toDirectory, string $withName): Promi
 }
 
 /**
- * @internal
- *
  * @psalm-suppress InvalidReturnType
  *
- * @param LoggerInterface $logger
- * @param Request         $request
- * @param string          $requestId
- *
- * @return \Generator
+ * @internal
  */
 function logArtaxRequest(LoggerInterface $logger, Request $request, string $requestId): \Generator
 {
@@ -73,10 +59,6 @@ function logArtaxRequest(LoggerInterface $logger, Request $request, string $requ
 
 /**
  * @internal
- *
- * @param LoggerInterface $logger
- * @param Response        $response
- * @param string          $requestId
  *
  * @return void
  */
@@ -96,10 +78,6 @@ function logArtaxResponse(LoggerInterface $logger, Response $response, string $r
 /**
  * @internal
  *
- * @param LoggerInterface $logger
- * @param \Throwable      $throwable
- * @param string          $requestId
- *
  * @return void
  */
 function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, string $requestId): void
@@ -116,8 +94,6 @@ function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, strin
 
 /**
  * @internal
- *
- * @param \Throwable $throwable
  *
  * @return \Throwable
  */

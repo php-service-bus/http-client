@@ -12,6 +12,7 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
+use Amp\Http\Client\Connection\UnlimitedConnectionPool;
 use function Amp\ByteStream\pipe;
 use function Amp\call;
 use function Amp\File\open;
@@ -36,31 +37,39 @@ final class ArtaxHttpClient implements HttpClient
 {
     private const DEFAULT_TRANSFER_TIMEOUT = 10000;
 
-    private const DEFAULT_FOLLOW_REDIRECTS = 10;
+    /** @var AmphpHttpClient */
+    private $handler;
 
-    private AmphpHttpClient $handler;
+    /** @var LoggerInterface */
+    private $logger;
 
-    private LoggerInterface $logger;
+    /** @var int */
+    private $transferTimeout;
 
-    public function __construct(?AmphpHttpClient $client = null, LoggerInterface $logger = null)
+    /**
+     * @param AmphpHttpClient      $httpClient
+     * @param int|null             $transferTimeout Transfer timeout in milliseconds until an HTTP request is
+     *                                              automatically aborted, use 0 to disable
+     * @param LoggerInterface|null $logger
+     */
+    public function __construct(AmphpHttpClient $httpClient = null, ?int $transferTimeout = null, LoggerInterface $logger = null)
     {
-        $this->logger = $logger ?? new NullLogger();
+        $this->logger          = $logger ?? new NullLogger();
+        $this->transferTimeout = $transferTimeout ?? self::DEFAULT_TRANSFER_TIMEOUT;
 
-        if (null === $client)
-        {
-            $client = (new HttpClientBuilder())
-                ->followRedirects(self::DEFAULT_FOLLOW_REDIRECTS)
+        $this->handler = $httpClient ?? (new HttpClientBuilder())
+                ->usingPool(new UnlimitedConnectionPool())
                 ->build();
-        }
-
-        $this->handler = $client;
     }
 
     /**
+     * @psalm-suppress MixedTypeCoercion
+     *
      * {@inheritdoc}
      */
     public function execute(HttpRequest $requestData): Promise
     {
+        /** @psalm-suppress InvalidArgument */
         return call(
             function (HttpRequest $requestData): \Generator
             {
@@ -75,14 +84,15 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
+     * @psalm-suppress MixedTypeCoercion
+     *
      * {@inheritdoc}
      */
     public function download(string $filePath, string $destinationDirectory, string $fileName): Promise
     {
-        $client = $this->handler;
-
+        /** @psalm-suppress InvalidArgument */
         return call(
-            static function (string $filePath, string $destinationDirectory, string $fileName) use ($client): \Generator
+            function (string $filePath, string $destinationDirectory, string $fileName): \Generator
             {
                 try
                 {
@@ -91,9 +101,9 @@ final class ArtaxHttpClient implements HttpClient
                      *
                      * @var Response $response
                      */
-                    $response = yield $client->request(
+                    $response = yield $this->handler->request(
                         new Request($filePath),
-                        new TimeoutCancellationToken(self::DEFAULT_TRANSFER_TIMEOUT)
+                        new TimeoutCancellationToken($this->transferTimeout)
                     );
 
                     /** @var string $tmpDirectoryPath */
@@ -130,6 +140,12 @@ final class ArtaxHttpClient implements HttpClient
 
     /**
      * Handle GET query.
+     *
+     * @param HttpRequest $requestData
+     *
+     * @throws \Throwable
+     *
+     * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
     private function executeGet(HttpRequest $requestData): \Generator
     {
@@ -144,22 +160,27 @@ final class ArtaxHttpClient implements HttpClient
             $request->setHeader($headerKey, $value);
         }
 
-        return self::doRequest(
-            $this->handler,
-            $request,
-            $this->logger
-        );
+        /** @var \GuzzleHttp\Psr7\Response $response */
+        $response = yield from $this->doRequest($this->handler, $request, $this->logger);
+
+        return $response;
     }
 
     /**
      * Execute POST request.
+     *
+     * @param HttpRequest $requestData
+     *
+     * @throws \Throwable
+     *
+     * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
     private function executePost(HttpRequest $requestData): \Generator
     {
         /** @var ArtaxFormBody|string|null $body */
-        $body = $requestData->body;
-
+        $body    = $requestData->body;
         $request = new Request($requestData->url, $requestData->method);
+
         $request->setBody(
             $body instanceof ArtaxFormBody
                 ? $body->preparedBody()
@@ -175,34 +196,43 @@ final class ArtaxHttpClient implements HttpClient
             $request->setHeader($headerKey, $value);
         }
 
-        return self::doRequest($this->handler, $request, $this->logger);
+        /** @var \GuzzleHttp\Psr7\Response $response */
+        $response = yield from $this->doRequest($this->handler, $request, $this->logger);
+
+        return $response;
     }
 
     /**
+     * @psalm-suppress InvalidReturnType Incorrect resolving the value of the generator
+     *
+     * @param AmphpHttpClient $client
+     * @param Request         $request
+     * @param LoggerInterface $logger
+     *
      * @throws \Throwable
+     *
+     * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
-    private static function doRequest(AmphpHttpClient $client, Request $request, LoggerInterface $logger): \Generator
+    private function doRequest(AmphpHttpClient $client, Request $request, LoggerInterface $logger): \Generator
     {
         $requestId = \sha1(random_bytes(32));
 
         try
         {
-            yield from logArtaxRequest($logger, $request, $requestId);
+            logArtaxRequest($logger, $request, $requestId);
 
             /**
              * @psalm-suppress TooManyTemplateParams
              *
-             * @var \Amp\Http\Client\Response $artaxResponse
+             * @var Response $artaxResponse
              */
             $artaxResponse = yield $client->request(
                 $request,
-                new TimeoutCancellationToken(self::DEFAULT_TRANSFER_TIMEOUT)
+                new TimeoutCancellationToken($this->transferTimeout)
             );
 
             /** @var Psr7Response $response */
             $response = yield from self::adaptResponse($artaxResponse);
-
-            unset($artaxResponse);
 
             logArtaxResponse($logger, $response, $requestId);
 
@@ -217,7 +247,11 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
-     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress InvalidReturnType Incorrect resolving the value of the generator
+     *
+     * @param Response $response
+     *
+     * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
     private static function adaptResponse(Response $response): \Generator
     {

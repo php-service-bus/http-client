@@ -33,7 +33,7 @@
     ]
   },
   "require": {
-    "php": ">=7.4",
+    "php": ">=7.3",
     "amphp/file": "v1.0.*",
     "guzzlehttp/psr7": "v1.6.*",
     "amphp/http-client": "v4.0.*",

@@ -25,18 +25,24 @@ final class ArtaxFormBody implements FormBody
 {
     /**
      * Original body object.
+     *
+     * @var AmpFormBody
      */
-    private AmpFormBody $original;
+    private $original;
 
     /**
      * Boundary.
+     *
+     * @var string
      */
-    private string $boundary;
+    private $boundary;
 
     /**
      * Is multipart request.
+     *
+     * @var bool
      */
-    private bool $isMultipart;
+    private $isMultipart;
 
     public function __construct()
     {

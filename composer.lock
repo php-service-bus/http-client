@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34a75dba96e00b98f4ca3bc792abfbff",
+    "content-hash": "71b2805c7f79e14c127687ccee5c0005",
     "packages": [
         {
             "name": "amphp/amp",
@@ -196,16 +196,16 @@
         },
         {
             "name": "amphp/dns",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/dns.git",
-                "reference": "493d014b58c14e29303a145b0be4cf272aa6644f"
+                "reference": "9d7e57f37d21bfed8ff2e78db52b99d45ce0c215"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/dns/zipball/493d014b58c14e29303a145b0be4cf272aa6644f",
-                "reference": "493d014b58c14e29303a145b0be4cf272aa6644f",
+                "url": "https://api.github.com/repos/amphp/dns/zipball/9d7e57f37d21bfed8ff2e78db52b99d45ce0c215",
+                "reference": "9d7e57f37d21bfed8ff2e78db52b99d45ce0c215",
                 "shasum": ""
             },
             "require": {
@@ -269,7 +269,7 @@
                 "dns",
                 "resolve"
             ],
-            "time": "2019-07-30T16:09:33+00:00"
+            "time": "2019-11-28T20:10:22+00:00"
         },
         {
             "name": "amphp/file",
@@ -340,25 +340,25 @@
         },
         {
             "name": "amphp/hpack",
-            "version": "v2.0.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/hpack.git",
-                "reference": "bf334564c5eead116c342a1c747d3b9bc8a3c36b"
+                "reference": "84fb1373b8a3cfdf7462a87a3e79efe503f0e101"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/hpack/zipball/bf334564c5eead116c342a1c747d3b9bc8a3c36b",
-                "reference": "bf334564c5eead116c342a1c747d3b9bc8a3c36b",
+                "url": "https://api.github.com/repos/amphp/hpack/zipball/84fb1373b8a3cfdf7462a87a3e79efe503f0e101",
+                "reference": "84fb1373b8a3cfdf7462a87a3e79efe503f0e101",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7"
+                "php": ">=7.1"
             },
             "require-dev": {
                 "amphp/php-cs-fixer-config": "dev-master",
                 "http2jp/hpack-test-case": "^1",
-                "phpunit/phpunit": "^6"
+                "phpunit/phpunit": "^6 | ^7"
             },
             "type": "library",
             "autoload": {
@@ -394,7 +394,7 @@
                 "hpack",
                 "http-2"
             ],
-            "time": "2019-07-26T19:30:42+00:00"
+            "time": "2019-12-12T21:37:06+00:00"
         },
         {
             "name": "amphp/http",
@@ -441,23 +441,23 @@
         },
         {
             "name": "amphp/http-client",
-            "version": "v4.0.0-rc9",
+            "version": "v4.0.0-rc11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/http-client.git",
-                "reference": "00498c20942a028ae0d8f42ea330383baf95885e"
+                "reference": "638a77eda20754d71144b617bad39b8241b75512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/http-client/zipball/00498c20942a028ae0d8f42ea330383baf95885e",
-                "reference": "00498c20942a028ae0d8f42ea330383baf95885e",
+                "url": "https://api.github.com/repos/amphp/http-client/zipball/638a77eda20754d71144b617bad39b8241b75512",
+                "reference": "638a77eda20754d71144b617bad39b8241b75512",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "^2.4",
                 "amphp/byte-stream": "^1.6",
-                "amphp/hpack": "^2",
-                "amphp/http": "^1.3",
+                "amphp/hpack": "^3",
+                "amphp/http": "^1.5",
                 "amphp/socket": "^1",
                 "amphp/sync": "^1.3",
                 "league/uri": "^6",
@@ -469,14 +469,14 @@
             },
             "require-dev": {
                 "amphp/file": "^1 || ^0.3 || ^0.2",
-                "amphp/http-server": "^2-rc3",
+                "amphp/http-server": "dev-master",
                 "amphp/php-cs-fixer-config": "dev-master",
                 "amphp/phpunit-util": "^1.1",
                 "ext-json": "*",
                 "phpunit/phpunit": "^7 || ^8"
             },
             "suggest": {
-                "amphp/file": "Required for file request bodies",
+                "amphp/file": "Required for file request bodies and HTTP archive logging",
                 "ext-json": "*",
                 "ext-zlib": "*"
             },
@@ -504,17 +504,17 @@
                     "email": "aaron@trowski.com"
                 }
             ],
-            "description": "Asynchronous parallel HTTP/2 and HTTP/1.1 client built on the Amp concurrency framework",
+            "description": "Asynchronous concurrent HTTP/2 and HTTP/1.1 client built on the Amp concurrency framework",
             "homepage": "https://github.com/amphp/http-client",
             "keywords": [
                 "async",
                 "client",
+                "concurrent",
                 "http",
                 "non-blocking",
-                "parallel",
                 "rest"
             ],
-            "time": "2019-11-20T18:23:14+00:00"
+            "time": "2019-12-12T22:06:53+00:00"
         },
         {
             "name": "amphp/parallel",
@@ -852,16 +852,16 @@
         },
         {
             "name": "daverandom/libdns",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DaveRandom/LibDNS.git",
-                "reference": "1ecd825b6fa9bb3fddc07751997e29dc78749b95"
+                "reference": "e8b6d6593d18ac3a6a14666d8a68a4703b2e05f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DaveRandom/LibDNS/zipball/1ecd825b6fa9bb3fddc07751997e29dc78749b95",
-                "reference": "1ecd825b6fa9bb3fddc07751997e29dc78749b95",
+                "url": "https://api.github.com/repos/DaveRandom/LibDNS/zipball/e8b6d6593d18ac3a6a14666d8a68a4703b2e05f9",
+                "reference": "e8b6d6593d18ac3a6a14666d8a68a4703b2e05f9",
                 "shasum": ""
             },
             "require": {
@@ -888,7 +888,7 @@
             "keywords": [
                 "dns"
             ],
-            "time": "2018-01-10T15:56:17+00:00"
+            "time": "2019-12-03T09:12:46+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1093,16 +1093,16 @@
         },
         {
             "name": "league/uri-interfaces",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri-interfaces.git",
-                "reference": "aac2aa37f20cc9987295b42454da8c4494c8ff22"
+                "reference": "ae2601a183ad14b73628a305c0f906c030757b39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/aac2aa37f20cc9987295b42454da8c4494c8ff22",
-                "reference": "aac2aa37f20cc9987295b42454da8c4494c8ff22",
+                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/ae2601a183ad14b73628a305c0f906c030757b39",
+                "reference": "ae2601a183ad14b73628a305c0f906c030757b39",
                 "shasum": ""
             },
             "require": {
@@ -1146,7 +1146,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2019-10-17T07:24:59+00:00"
+            "time": "2019-12-17T13:59:29+00:00"
         },
         {
             "name": "league/uri-parser",
@@ -1874,16 +1874,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.9.3",
+            "version": "1.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "007c053ae6f31bba39dfa19a7726f56e9763bbea"
+                "reference": "579bb7356d91f9456ccd505f24ca8b667966a0a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/007c053ae6f31bba39dfa19a7726f56e9763bbea",
-                "reference": "007c053ae6f31bba39dfa19a7726f56e9763bbea",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/579bb7356d91f9456ccd505f24ca8b667966a0a7",
+                "reference": "579bb7356d91f9456ccd505f24ca8b667966a0a7",
                 "shasum": ""
             },
             "require": {
@@ -1918,7 +1918,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2019-08-09T12:45:53+00:00"
+            "time": "2019-12-15T19:12:40+00:00"
         },
         {
             "name": "netresearch/jsonmapper",
@@ -2845,21 +2845,21 @@
         },
         {
             "name": "php-service-bus/code-style-config",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-service-bus/code-style-config.git",
-                "reference": "ab89a1963973c3639e2e43aa61addb694ede44fa"
+                "reference": "dff63007fe0fa3c7c0fb67c4dccbeedaac1a14c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-service-bus/code-style-config/zipball/ab89a1963973c3639e2e43aa61addb694ede44fa",
-                "reference": "ab89a1963973c3639e2e43aa61addb694ede44fa",
+                "url": "https://api.github.com/repos/php-service-bus/code-style-config/zipball/dff63007fe0fa3c7c0fb67c4dccbeedaac1a14c3",
+                "reference": "dff63007fe0fa3c7c0fb67c4dccbeedaac1a14c3",
                 "shasum": ""
             },
             "require": {
                 "friendsofphp/php-cs-fixer": "v2.16.*",
-                "php": ">=7.4"
+                "php": ">=7.3"
             },
             "type": "library",
             "autoload": {
@@ -2880,7 +2880,7 @@
                 }
             ],
             "description": "PHP Service Bus code style config",
-            "time": "2019-12-01T19:26:37+00:00"
+            "time": "2019-12-03T22:09:48+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -3034,33 +3034,33 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203"
+                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/f6811d96d97bdf400077a0cc100ae56aa32b9203",
-                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
+                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0|^5.0",
-                "sebastian/comparator": "^1.1|^2.0|^3.0",
+                "sebastian/comparator": "^1.2.3|^2.0|^3.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^2.5|^3.2",
+                "phpspec/phpspec": "^2.5 || ^3.2",
                 "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5 || ^7.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8.x-dev"
+                    "dev-master": "1.10.x-dev"
                 }
             },
             "autoload": {
@@ -3093,7 +3093,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-10-03T11:07:50+00:00"
+            "time": "2019-12-17T16:54:23+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
@@ -5061,16 +5061,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.7.1",
+            "version": "3.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "8e6aa8a07d148dcedf58cccf32ce4b602b422035"
+                "reference": "d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/8e6aa8a07d148dcedf58cccf32ce4b602b422035",
-                "reference": "8e6aa8a07d148dcedf58cccf32ce4b602b422035",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0",
+                "reference": "d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0",
                 "shasum": ""
             },
             "require": {
@@ -5145,7 +5145,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-12-02T05:11:45+00:00"
+            "time": "2019-12-03T13:33:31+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5295,7 +5295,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4"
+        "php": ">=7.3"
     },
     "platform-dev": []
 }

@@ -19,8 +19,10 @@ final class InputFilePath
 {
     /**
      * Absolute file path.
+     *
+     * @var string
      */
-    public string $path;
+    public $path;
 
     public function __construct(string $path)
     {

@@ -21,20 +21,26 @@ class HttpRequest
 {
     /**
      * Http method.
+     *
+     * @var string
      */
-    public string $method;
+    public $method;
 
     /**
      * Request URL.
+     *
+     * @var string
      */
-    public string $url;
+    public $url;
 
     /**
      * Request headers.
      *
      * @psalm-var array<string, array|string>
+     *
+     * @var array
      */
-    public array  $headers;
+    public $headers;
 
     /**
      * Request payload.

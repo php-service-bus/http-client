@@ -12,14 +12,14 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
-use Amp\Http\Client\Connection\UnlimitedConnectionPool;
-use Amp\Http\Client\HttpClientBuilder;
 use function Amp\ByteStream\pipe;
 use function Amp\call;
 use function Amp\File\open;
 use function Amp\File\rename;
 use Amp\File\StatCache;
+use Amp\Http\Client\Connection\UnlimitedConnectionPool;
 use Amp\Http\Client\HttpClient as AmpHttpClient;
+use Amp\Http\Client\HttpClientBuilder;
 use Amp\Http\Client\Request;
 use Amp\Http\Client\Response;
 use Amp\Promise;
@@ -64,8 +64,8 @@ final class ArtaxHttpClient implements HttpClient
     {
         $this->transferTimeout = $transferTimeout ?? self::DEFAULT_TRANSFER_TIMEOUT;
         $this->handler = $httpClient ?? (new HttpClientBuilder())
-                ->usingPool(new UnlimitedConnectionPool())
-                ->build();
+            ->usingPool(new UnlimitedConnectionPool())
+            ->build();
 
         $this->logger = $logger ?? new NullLogger();
     }
@@ -135,7 +135,7 @@ final class ArtaxHttpClient implements HttpClient
 
                     return $destinationFilePath;
                 }
-                catch(\Throwable $throwable)
+                catch (\Throwable $throwable)
                 {
                     throw adaptArtaxThrowable($throwable);
                 }
@@ -163,7 +163,7 @@ final class ArtaxHttpClient implements HttpClient
          * @var string          $headerKey
          * @var string|string[] $value
          */
-        foreach($requestData->headers as $headerKey => $value)
+        foreach ($requestData->headers as $headerKey => $value)
         {
             $request->setHeader($headerKey, $value);
         }
@@ -199,7 +199,7 @@ final class ArtaxHttpClient implements HttpClient
          * @var string          $headerKey
          * @var string|string[] $value
          */
-        foreach($requestData->headers as $headerKey => $value)
+        foreach ($requestData->headers as $headerKey => $value)
         {
             $request->setHeader($headerKey, $value);
         }
@@ -246,7 +246,7 @@ final class ArtaxHttpClient implements HttpClient
 
             return $response;
         }
-        catch(\Throwable $throwable)
+        catch (\Throwable $throwable)
         {
             logArtaxThrowable($logger, $throwable, $requestId);
 

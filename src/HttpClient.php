@@ -29,7 +29,7 @@ interface HttpClient
      * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
      * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
      */
-    public function execute(HttpRequest $requestData): Promise;
+    public function execute(HttpRequest $requestData, ?RequestContext $context = null): Promise;
 
     /**
      * Download file.
@@ -41,5 +41,5 @@ interface HttpClient
      * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
      * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
      */
-    public function download(string $filePath, string $destinationDirectory, string $fileName): Promise;
+    public function download(string $filePath, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise;
 }

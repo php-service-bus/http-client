@@ -12,8 +12,10 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
+use Amp\Http\Client\Connection\ConnectionPool;
 use Amp\Http\Client\Connection\UnlimitedConnectionPool;
 use Amp\Http\Client\DelegateHttpClient;
+use ServiceBus\HttpClient\RequestContext;
 use function Amp\ByteStream\pipe;
 use function Amp\call;
 use function Amp\File\open;
@@ -35,31 +37,19 @@ use ServiceBus\HttpClient\HttpRequest;
  */
 final class ArtaxHttpClient implements HttpClient
 {
-    private const DEFAULT_TRANSFER_TIMEOUT = 10000;
-
     /** @var DelegateHttpClient */
     private $handler;
 
     /** @var LoggerInterface */
     private $logger;
 
-    /** @var int */
-    private $transferTimeout;
 
-    /**
-     * @param DelegateHttpClient|null $httpClient
-     * @param int|null                $transferTimeout Transfer timeout in milliseconds until an HTTP request is
-     *                                                 automatically aborted, use 0 to disable
-     * @param LoggerInterface|null    $logger
-     */
-    public function __construct(DelegateHttpClient $httpClient = null, ?int $transferTimeout = null, LoggerInterface $logger = null)
+    public function __construct(?ConnectionPool $connectionPool = null, LoggerInterface $logger = null)
     {
-        $this->logger          = $logger ?? new NullLogger();
-        $this->transferTimeout = $transferTimeout ?? self::DEFAULT_TRANSFER_TIMEOUT;
+        $connectionPool = $connectionPool ?? new UnlimitedConnectionPool();
+        $this->logger   = $logger ?? new NullLogger();
 
-        $this->handler = $httpClient ?? (new HttpClientBuilder())
-                ->usingPool(new UnlimitedConnectionPool())
-                ->build();
+        $this->handler = (new HttpClientBuilder())->usingPool($connectionPool)->build();
     }
 
     /**
@@ -67,17 +57,20 @@ final class ArtaxHttpClient implements HttpClient
      *
      * {@inheritdoc}
      */
-    public function execute(HttpRequest $requestData): Promise
+    public function execute(HttpRequest $requestData, ?RequestContext $context = null): Promise
     {
+        $context = $context ?? new RequestContext();
+
         /** @psalm-suppress InvalidArgument */
         return call(
-            function (HttpRequest $requestData): \Generator
+            function (HttpRequest $requestData) use ($context): \Generator
             {
-                $generator = 'GET' === $requestData->method
-                    ? $this->executeGet($requestData)
-                    : $this->executePost($requestData);
+                $request = self::buildRequest($requestData, $context);
 
-                return yield from $generator;
+                /** @var \GuzzleHttp\Psr7\Response $response */
+                $response = yield from $this->doRequest($this->handler, $request, $context);
+
+                return $response;
             },
             $requestData
         );
@@ -88,22 +81,29 @@ final class ArtaxHttpClient implements HttpClient
      *
      * {@inheritdoc}
      */
-    public function download(string $filePath, string $destinationDirectory, string $fileName): Promise
+    public function download(string $filePath, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise
     {
+        $context = $context ?? new RequestContext();
+
         /** @psalm-suppress InvalidArgument */
         return call(
-            function (string $filePath, string $destinationDirectory, string $fileName): \Generator
+            function (string $filePath, string $destinationDirectory, string $fileName) use ($context): \Generator
             {
                 try
                 {
+                    $request = new Request($filePath);
+                    $request->setTransferTimeout($context->transferTimeout);
+                    $request->setTcpConnectTimeout($context->tcpConnectTimeout);
+                    $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
+
                     /**
                      * @psalm-suppress TooManyTemplateParams
                      *
                      * @var Response $response
                      */
                     $response = yield $this->handler->request(
-                        new Request($filePath),
-                        new TimeoutCancellationToken($this->transferTimeout)
+                        $request,
+                        new TimeoutCancellationToken($context->transferTimeout)
                     );
 
                     /** @var string $tmpDirectoryPath */
@@ -139,87 +139,20 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
-     * Handle GET query.
-     *
-     * @param HttpRequest $requestData
-     *
-     * @throws \Throwable
-     *
-     * @return \Generator<\GuzzleHttp\Psr7\Response>
-     */
-    private function executeGet(HttpRequest $requestData): \Generator
-    {
-        $request = new Request($requestData->url);
-
-        /**
-         * @var string          $headerKey
-         * @var string|string[] $value
-         */
-        foreach ($requestData->headers as $headerKey => $value)
-        {
-            $request->setHeader($headerKey, $value);
-        }
-
-        /** @var \GuzzleHttp\Psr7\Response $response */
-        $response = yield from $this->doRequest($this->handler, $request, $this->logger);
-
-        return $response;
-    }
-
-    /**
-     * Execute POST request.
-     *
-     * @param HttpRequest $requestData
-     *
-     * @throws \Throwable
-     *
-     * @return \Generator<\GuzzleHttp\Psr7\Response>
-     */
-    private function executePost(HttpRequest $requestData): \Generator
-    {
-        /** @var ArtaxFormBody|string|null $body */
-        $body    = $requestData->body;
-        $request = new Request($requestData->url, $requestData->method);
-
-        $request->setBody(
-            $body instanceof ArtaxFormBody
-                ? $body->preparedBody()
-                : $body
-        );
-
-        /**
-         * @var string          $headerKey
-         * @var string|string[] $value
-         */
-        foreach ($requestData->headers as $headerKey => $value)
-        {
-            $request->setHeader($headerKey, $value);
-        }
-
-        /** @var \GuzzleHttp\Psr7\Response $response */
-        $response = yield from $this->doRequest($this->handler, $request, $this->logger);
-
-        return $response;
-    }
-
-    /**
      * @psalm-suppress InvalidReturnType Incorrect resolving the value of the generator
      *
-     * @param DelegateHttpClient $client
-     * @param Request         $request
-     * @param LoggerInterface $logger
-     *
      * @throws \Throwable
      *
      * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
-    private function doRequest(DelegateHttpClient $client, Request $request, LoggerInterface $logger): \Generator
+    private function doRequest(DelegateHttpClient $client, Request $request, RequestContext $context): \Generator
     {
-        $requestId = \sha1(random_bytes(32));
-
         try
         {
-            logArtaxRequest($logger, $request, $requestId);
+            if ($context->logRequest === true)
+            {
+                logArtaxRequest($this->logger, $request, $context->traceId);
+            }
 
             /**
              * @psalm-suppress TooManyTemplateParams
@@ -228,22 +161,54 @@ final class ArtaxHttpClient implements HttpClient
              */
             $artaxResponse = yield $client->request(
                 $request,
-                new TimeoutCancellationToken($this->transferTimeout)
+                new TimeoutCancellationToken($context->transferTimeout)
             );
 
             /** @var Psr7Response $response */
             $response = yield from self::adaptResponse($artaxResponse);
 
-            logArtaxResponse($logger, $response, $requestId);
+            if ($context->logResponse === true)
+            {
+                logArtaxResponse($this->logger, $response, $context->traceId);
+            }
 
             return $response;
         }
         catch (\Throwable $throwable)
         {
-            logArtaxThrowable($logger, $throwable, $requestId);
+            logArtaxThrowable($this->logger, $throwable, $context->traceId);
 
             throw adaptArtaxThrowable($throwable);
         }
+    }
+
+    private static function buildRequest(HttpRequest $requestData, RequestContext $context): Request
+    {
+        $request = new Request($requestData->url, $requestData->method);
+
+        $request->setTransferTimeout($context->transferTimeout);
+        $request->setTcpConnectTimeout($context->tcpConnectTimeout);
+        $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
+
+        /**
+         * @var string          $headerKey
+         * @var string|string[] $value
+         */
+        foreach ($requestData->headers as $headerKey => $value)
+        {
+            $request->setHeader($headerKey, $value);
+        }
+
+        /** @var ArtaxFormBody|string|null $body */
+        $body = $requestData->body;
+
+        $request->setBody(
+            $body instanceof ArtaxFormBody
+                ? $body->preparedBody()
+                : $body
+        );
+
+        return $request;
     }
 
     /**
@@ -255,7 +220,10 @@ final class ArtaxHttpClient implements HttpClient
      */
     private static function adaptResponse(Response $response): \Generator
     {
-        /** @psalm-suppress InvalidCast Invalid read stream handle */
+        /**
+         * @psalm-suppress TooManyTemplateParams
+         * @psalm-suppress InvalidCast Invalid read stream handle
+         */
         $responseBody = (string) yield $response->getBody()->buffer();
 
         return new Psr7Response(

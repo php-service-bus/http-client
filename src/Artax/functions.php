@@ -113,7 +113,7 @@ function adaptArtaxThrowable(\Throwable $throwable): \Throwable
     /** @psalm-var class-string<\Amp\Http\Client\HttpException> $exceptionClass */
     $exceptionClass = \get_class($throwable);
 
-    if(true === isset($mapping[$exceptionClass]))
+    if (true === isset($mapping[$exceptionClass]))
     {
         /** @var class-string<\Exception> $exceptionClass */
         $exceptionClass = $mapping[$exceptionClass];

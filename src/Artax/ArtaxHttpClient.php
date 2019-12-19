@@ -13,12 +13,12 @@ declare(strict_types = 1);
 namespace ServiceBus\HttpClient\Artax;
 
 use Amp\Http\Client\Connection\UnlimitedConnectionPool;
+use Amp\Http\Client\DelegateHttpClient;
 use function Amp\ByteStream\pipe;
 use function Amp\call;
 use function Amp\File\open;
 use function Amp\File\rename;
 use Amp\File\StatCache;
-use Amp\Http\Client\HttpClient as AmphpHttpClient;
 use Amp\Http\Client\HttpClientBuilder;
 use Amp\Http\Client\Request;
 use Amp\Http\Client\Response;
@@ -37,7 +37,7 @@ final class ArtaxHttpClient implements HttpClient
 {
     private const DEFAULT_TRANSFER_TIMEOUT = 10000;
 
-    /** @var AmphpHttpClient */
+    /** @var DelegateHttpClient */
     private $handler;
 
     /** @var LoggerInterface */
@@ -47,12 +47,12 @@ final class ArtaxHttpClient implements HttpClient
     private $transferTimeout;
 
     /**
-     * @param AmphpHttpClient      $httpClient
-     * @param int|null             $transferTimeout Transfer timeout in milliseconds until an HTTP request is
-     *                                              automatically aborted, use 0 to disable
-     * @param LoggerInterface|null $logger
+     * @param DelegateHttpClient|null $httpClient
+     * @param int|null                $transferTimeout Transfer timeout in milliseconds until an HTTP request is
+     *                                                 automatically aborted, use 0 to disable
+     * @param LoggerInterface|null    $logger
      */
-    public function __construct(AmphpHttpClient $httpClient = null, ?int $transferTimeout = null, LoggerInterface $logger = null)
+    public function __construct(DelegateHttpClient $httpClient = null, ?int $transferTimeout = null, LoggerInterface $logger = null)
     {
         $this->logger          = $logger ?? new NullLogger();
         $this->transferTimeout = $transferTimeout ?? self::DEFAULT_TRANSFER_TIMEOUT;
@@ -205,7 +205,7 @@ final class ArtaxHttpClient implements HttpClient
     /**
      * @psalm-suppress InvalidReturnType Incorrect resolving the value of the generator
      *
-     * @param AmphpHttpClient $client
+     * @param DelegateHttpClient $client
      * @param Request         $request
      * @param LoggerInterface $logger
      *
@@ -213,7 +213,7 @@ final class ArtaxHttpClient implements HttpClient
      *
      * @return \Generator<\GuzzleHttp\Psr7\Response>
      */
-    private function doRequest(AmphpHttpClient $client, Request $request, LoggerInterface $logger): \Generator
+    private function doRequest(DelegateHttpClient $client, Request $request, LoggerInterface $logger): \Generator
     {
         $requestId = \sha1(random_bytes(32));
 

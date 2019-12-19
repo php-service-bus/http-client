@@ -256,7 +256,7 @@ final class ArtaxHttpClient implements HttpClient
     private static function adaptResponse(Response $response): \Generator
     {
         /** @psalm-suppress InvalidCast Invalid read stream handle */
-        $responseBody = (string) yield $response->getBody()->read();
+        $responseBody = (string) yield $response->getBody()->buffer();
 
         return new Psr7Response(
             $response->getStatus(),

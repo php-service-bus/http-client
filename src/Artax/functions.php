@@ -12,6 +12,7 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient\Artax;
 
+use Amp\CancelledException;
 use Amp\Dns\DnsException;
 use Amp\Dns\NoRecordException;
 use Amp\Http\Client\ParseException;
@@ -101,17 +102,18 @@ function adaptArtaxThrowable(\Throwable $throwable): \Throwable
 {
     /** @psalm-var array<class-string<\Amp\Http\Client\HttpException>, class-string<\Exception>> $mapping */
     $mapping = [
-        NoRecordException::class => HttpClientExceptions\DnsResolveFailed::class,
-        DnsException::class      => HttpClientExceptions\DnsResolveFailed::class,
-        SocketException::class   => HttpClientExceptions\ConnectionFailed::class,
-        ParseException::class    => HttpClientExceptions\IncorrectParameters::class,
-        TimeoutException::class  => HttpClientExceptions\RequestTimeoutReached::class,
+        NoRecordException::class  => HttpClientExceptions\DnsResolveFailed::class,
+        DnsException::class       => HttpClientExceptions\DnsResolveFailed::class,
+        SocketException::class    => HttpClientExceptions\ConnectionFailed::class,
+        ParseException::class     => HttpClientExceptions\IncorrectParameters::class,
+        TimeoutException::class   => HttpClientExceptions\RequestTimeoutReached::class,
+        CancelledException::class => HttpClientExceptions\RequestTimeoutReached::class,
     ];
 
     /** @psalm-var class-string<\Amp\Http\Client\HttpException> $exceptionClass */
     $exceptionClass = \get_class($throwable);
 
-    if (true === isset($mapping[$exceptionClass]))
+    if(true === isset($mapping[$exceptionClass]))
     {
         /** @var class-string<\Exception> $exceptionClass */
         $exceptionClass = $mapping[$exceptionClass];

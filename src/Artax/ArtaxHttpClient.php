@@ -43,7 +43,6 @@ final class ArtaxHttpClient implements HttpClient
     /** @var LoggerInterface */
     private $logger;
 
-
     public function __construct(?ConnectionPool $connectionPool = null, LoggerInterface $logger = null)
     {
         $connectionPool = $connectionPool ?? new UnlimitedConnectionPool();
@@ -63,7 +62,7 @@ final class ArtaxHttpClient implements HttpClient
 
         /** @psalm-suppress InvalidArgument */
         return call(
-            function (HttpRequest $requestData) use ($context): \Generator
+            function () use ($requestData, $context): \Generator
             {
                 $request = self::buildRequest($requestData, $context);
 
@@ -71,8 +70,7 @@ final class ArtaxHttpClient implements HttpClient
                 $response = yield from $this->doRequest($this->handler, $request, $context);
 
                 return $response;
-            },
-            $requestData
+            }
         );
     }
 
@@ -87,7 +85,7 @@ final class ArtaxHttpClient implements HttpClient
 
         /** @psalm-suppress InvalidArgument */
         return call(
-            function (string $filePath, string $destinationDirectory, string $fileName) use ($context): \Generator
+            function () use ($filePath, $destinationDirectory, $fileName, $context): \Generator
             {
                 try
                 {
@@ -147,6 +145,8 @@ final class ArtaxHttpClient implements HttpClient
      */
     private function doRequest(DelegateHttpClient $client, Request $request, RequestContext $context): \Generator
     {
+        $timeStart = \microtime(true);
+
         try
         {
             if ($context->logRequest === true)
@@ -167,16 +167,20 @@ final class ArtaxHttpClient implements HttpClient
             /** @var Psr7Response $response */
             $response = yield from self::adaptResponse($artaxResponse);
 
+            $executionTime = (string) (\microtime(true) - $timeStart);
+
             if ($context->logResponse === true)
             {
-                logArtaxResponse($this->logger, $response, $context->traceId);
+                logArtaxResponse($this->logger, $response, $context->traceId, $executionTime);
             }
 
             return $response;
         }
         catch (\Throwable $throwable)
         {
-            logArtaxThrowable($this->logger, $throwable, $context->traceId);
+            $executionTime = (string) (\microtime(true) - $timeStart);
+
+            logArtaxThrowable($this->logger, $throwable, $context->traceId, $executionTime);
 
             throw adaptArtaxThrowable($throwable);
         }

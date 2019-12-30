@@ -63,7 +63,7 @@ function logArtaxRequest(LoggerInterface $logger, Request $request, string $requ
  *
  * @return void
  */
-function logArtaxResponse(LoggerInterface $logger, Response $response, string $requestId): void
+function logArtaxResponse(LoggerInterface $logger, Response $response, string $requestId, string $executionTime): void
 {
     $logger->debug(
         'Response: {responseHttpCode} {responseContent} {responseHeaders}',
@@ -72,6 +72,7 @@ function logArtaxResponse(LoggerInterface $logger, Response $response, string $r
             'responseContent'  => (string) $response->getBody(),
             'responseHeaders'  => $response->getHeaders(),
             'requestId'        => $requestId,
+            'executionTime'    => \sprintf('%.2f', $executionTime)
         ]
     );
 }
@@ -81,7 +82,7 @@ function logArtaxResponse(LoggerInterface $logger, Response $response, string $r
  *
  * @return void
  */
-function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, string $requestId): void
+function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, string $requestId, string $executionTime): void
 {
     $logger->error(
         'During the execution of the request with identifier "{requestId}" an exception was caught: "{throwableMessage}"',
@@ -89,6 +90,7 @@ function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, strin
             'requestId'        => $requestId,
             'throwableMessage' => $throwable->getMessage(),
             'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine()),
+            'executionTime'    => \sprintf('%.2f', $executionTime)
         ]
     );
 }

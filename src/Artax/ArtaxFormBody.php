@@ -68,10 +68,10 @@ final class ArtaxFormBody implements FormBody
     /**
      * {@inheritdoc}
      */
-    public function addFile(string $fieldName, InputFilePath $file): void
+    public function addFile(string $fieldName, InputFilePath $file, string $contentType = 'application/octet-stream'): void
     {
         $this->isMultipart = true;
-        $this->original->addFile($fieldName, $file->path);
+        $this->original->addFile($fieldName, $file->path, $contentType);
     }
 
     /**

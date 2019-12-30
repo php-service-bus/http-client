@@ -32,7 +32,7 @@ interface FormBody
     /**
      * Add a file field to the form entity body.
      */
-    public function addFile(string $fieldName, InputFilePath $file): void;
+    public function addFile(string $fieldName, InputFilePath $file, string $contentType = 'application/octet-stream'): void;
 
     /**
      * Add a data field to the form entity body.

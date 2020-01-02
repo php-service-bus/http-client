@@ -684,16 +684,16 @@
         },
         {
             "name": "amphp/socket",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/socket.git",
-                "reference": "abc18f1786363ceee2555ffd7fe87e4eead2ce24"
+                "reference": "cf56db51bff8570a0741f9de8f0922ef589642d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/socket/zipball/abc18f1786363ceee2555ffd7fe87e4eead2ce24",
-                "reference": "abc18f1786363ceee2555ffd7fe87e4eead2ce24",
+                "url": "https://api.github.com/repos/amphp/socket/zipball/cf56db51bff8570a0741f9de8f0922ef589642d3",
+                "reference": "cf56db51bff8570a0741f9de8f0922ef589642d3",
                 "shasum": ""
             },
             "require": {
@@ -708,7 +708,6 @@
             "require-dev": {
                 "amphp/php-cs-fixer-config": "dev-master",
                 "amphp/phpunit-util": "^1",
-                "league/uri-schemes": "^1.2.1",
                 "phpunit/phpunit": "^6"
             },
             "type": "library",
@@ -750,7 +749,7 @@
                 "tcp",
                 "tls"
             ],
-            "time": "2019-08-01T19:32:46+00:00"
+            "time": "2019-12-31T13:59:21+00:00"
         },
         {
             "name": "amphp/sync",

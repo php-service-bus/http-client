@@ -151,7 +151,7 @@ final class ArtaxHttpClient implements HttpClient
         {
             if ($context->logRequest === true)
             {
-                logArtaxRequest($this->logger, $request, $context->traceId);
+                yield from logArtaxRequest($this->logger, $request, $context->traceId);
             }
 
             /**

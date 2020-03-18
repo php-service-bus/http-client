@@ -37,13 +37,17 @@ final class RequestContext
     /** @var string */
     public $traceId;
 
+    /** @var string|null */
+    public $protocolVersion;
+
     public function __construct(
         ?string $traceId = null,
         int $tcpConnectTimeout = 10000,
         int $tlsHandshakeTimeout = 10000,
         int $transferTimeout = 10000,
         bool $logRequest = true,
-        bool $logResponse = true
+        bool $logResponse = true,
+        ?string $protocolVersion = null
     ) {
         /** @noinspection PhpUnhandledExceptionInspection */
         $this->traceId             = $traceId ?? \sha1(\random_bytes(32));
@@ -52,5 +56,6 @@ final class RequestContext
         $this->transferTimeout     = $transferTimeout;
         $this->logRequest          = $logRequest;
         $this->logResponse         = $logResponse;
+        $this->protocolVersion     = $protocolVersion;
     }
 }

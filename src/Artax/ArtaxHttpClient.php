@@ -94,6 +94,11 @@ final class ArtaxHttpClient implements HttpClient
                     $request->setTcpConnectTimeout($context->tcpConnectTimeout);
                     $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
 
+                    if ($context->protocolVersion !== null)
+                    {
+                        $request->setProtocolVersions([$context->protocolVersion]);
+                    }
+
                     /**
                      * @psalm-suppress TooManyTemplateParams
                      *

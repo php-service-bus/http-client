@@ -15,7 +15,7 @@ namespace ServiceBus\HttpClient;
 /**
  * Http request options
  *
- * @psalm-immutable
+ * @psalm-readonly
  */
 final class RequestContext
 {

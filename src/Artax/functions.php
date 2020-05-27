@@ -29,6 +29,8 @@ use ServiceBus\HttpClient\Exception as HttpClientExceptions;
  *
  * @api
  *
+ * @return Promise<string>
+ *
  * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
  * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
  * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters
@@ -40,7 +42,7 @@ function downloadFile(string $url, string $toDirectory, string $withName): Promi
 }
 
 /**
- * @psalm-suppress InvalidReturnType
+ * @return \Generator<null>
  *
  * @internal
  */

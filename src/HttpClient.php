@@ -22,7 +22,7 @@ interface HttpClient
     /**
      * Execute request.
      *
-     * Returns \GuzzleHttp\Psr7\Response
+     * @return Promise<\GuzzleHttp\Psr7\Response>
      *
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
@@ -34,7 +34,7 @@ interface HttpClient
     /**
      * Download file.
      *
-     * Returns Path to file
+     * @return Promise<string>
      *
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed

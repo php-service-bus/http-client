@@ -125,7 +125,10 @@ final class ArtaxFormBody implements FormBody
      */
     public function getBodyLength(): Promise
     {
-        return $this->original->getBodyLength();
+        /** @psalm-var Promise<int> $promise */
+        $promise = $this->original->getBodyLength();
+
+        return $promise;
     }
 
     /**

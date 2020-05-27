@@ -33,17 +33,17 @@
     ]
   },
   "require": {
-    "php": ">=7.3",
+    "php": ">=7.4",
     "amphp/file": "v1.0.*",
     "guzzlehttp/psr7": "v1.6.*",
-    "amphp/http-client": "v4.2.*",
+    "amphp/http-client": "v4.3.*",
     "psr/log": "v1.1.*"
   },
   "require-dev": {
     "php-service-bus/code-style-config": "v1.2.*",
-    "phpunit/phpunit": "v8.4.*",
-    "vimeo/psalm": "v3.7.*",
-    "phpstan/phpstan": "v0.11.*"
+    "phpunit/phpunit": "v9.1.*",
+    "vimeo/psalm": "v3.11.*",
+    "phpstan/phpstan": "v0.12.*"
   },
   "prefer-stable": true,
   "minimum-stability": "dev",

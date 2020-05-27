@@ -60,7 +60,6 @@ final class ArtaxHttpClient implements HttpClient
     {
         $context = $context ?? new RequestContext();
 
-        /** @psalm-suppress InvalidArgument */
         return call(
             function () use ($requestData, $context): \Generator
             {
@@ -83,7 +82,6 @@ final class ArtaxHttpClient implements HttpClient
     {
         $context = $context ?? new RequestContext();
 
-        /** @psalm-suppress InvalidArgument */
         return call(
             function () use ($filePath, $destinationDirectory, $fileName, $context): \Generator
             {
@@ -99,11 +97,7 @@ final class ArtaxHttpClient implements HttpClient
                         $request->setProtocolVersions([$context->protocolVersion]);
                     }
 
-                    /**
-                     * @psalm-suppress TooManyTemplateParams
-                     *
-                     * @var Response $response
-                     */
+                    /** @var Response $response  */
                     $response = yield $this->handler->request(
                         $request,
                         new TimeoutCancellationToken($context->transferTimeout)
@@ -221,7 +215,7 @@ final class ArtaxHttpClient implements HttpClient
     }
 
     /**
-     * @psalm-suppress InvalidReturnType Incorrect resolving the value of the generator
+     * @psalm-suppress MixedReturnTypeCoercion
      *
      * @param Response $response
      *
@@ -229,10 +223,7 @@ final class ArtaxHttpClient implements HttpClient
      */
     private static function adaptResponse(Response $response): \Generator
     {
-        /**
-         * @psalm-suppress TooManyTemplateParams
-         * @psalm-suppress InvalidCast Invalid read stream handle
-         */
+        /** @psalm-suppress InvalidCast Invalid read stream handle */
         $responseBody = (string) yield $response->getBody()->buffer();
 
         return new Psr7Response(

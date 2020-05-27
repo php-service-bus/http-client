@@ -63,7 +63,7 @@ interface FormBody
     /**
      * Retrieve the HTTP message body length. If not available, return -1.
      *
-     * @return Promise
+     * @return Promise<int>
      */
     public function getBodyLength(): Promise;
 }

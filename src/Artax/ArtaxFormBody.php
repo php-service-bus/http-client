@@ -91,7 +91,7 @@ final class ArtaxFormBody implements FormBody
          * @var string                         $key
          * @var float|InputFilePath|int|string $value
          */
-        foreach ($fields as $key => $value)
+        foreach($fields as $key => $value)
         {
             /** @psalm-suppress MixedArgument Incorrect processing of ternary operators */
             $value instanceof InputFilePath
@@ -125,7 +125,12 @@ final class ArtaxFormBody implements FormBody
      */
     public function getBodyLength(): Promise
     {
-        /** @psalm-var Promise<int> $promise */
+        /**
+         * @noinspection PhpUnnecessaryLocalVariableInspection
+         * @noinspection OneTimeUseVariablesInspection
+         *
+         * @psalm-var    Promise<int> $promise
+         */
         $promise = $this->original->getBodyLength();
 
         return $promise;

@@ -23,6 +23,7 @@ use Amp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Log\LoggerInterface;
 use ServiceBus\HttpClient\Exception as HttpClientExceptions;
+use function ServiceBus\Common\throwableMessage;
 
 /**
  * Download file.
@@ -90,7 +91,7 @@ function logArtaxThrowable(LoggerInterface $logger, \Throwable $throwable, strin
         'During the execution of the request with identifier "{requestId}" an exception was caught: "{throwableMessage}"',
         [
             'requestId'        => $requestId,
-            'throwableMessage' => $throwable->getMessage(),
+            'throwableMessage' => throwableMessage($throwable),
             'throwablePoint'   => \sprintf('%s:%d', $throwable->getFile(), $throwable->getLine()),
             'executionTime'    => \sprintf('%.2f', $executionTime)
         ]
@@ -117,7 +118,7 @@ function adaptArtaxThrowable(\Throwable $throwable): \Throwable
     /** @psalm-var class-string<\Amp\Http\Client\HttpException> $exceptionClass */
     $exceptionClass = \get_class($throwable);
 
-    if (true === isset($mapping[$exceptionClass]))
+    if (isset($mapping[$exceptionClass]))
     {
         /** @var class-string<\Exception> $exceptionClass */
         $exceptionClass = $mapping[$exceptionClass];

@@ -12,6 +12,8 @@ declare(strict_types = 1);
 
 namespace ServiceBus\HttpClient;
 
+use function ServiceBus\Common\uuid;
+
 /**
  * Http request options
  *
@@ -40,17 +42,31 @@ final class RequestContext
     /** @var string|null */
     public $protocolVersion;
 
+    public static function withoutLogging(
+        int $tcpConnectTimeout = 15000,
+        int $tlsHandshakeTimeout = 15000,
+        int $transferTimeout = 15000
+    ): self {
+        return new self(
+            null,
+            $tcpConnectTimeout,
+            $tlsHandshakeTimeout,
+            $transferTimeout,
+            false,
+            false
+        );
+    }
+
     public function __construct(
         ?string $traceId = null,
-        int $tcpConnectTimeout = 10000,
-        int $tlsHandshakeTimeout = 10000,
-        int $transferTimeout = 10000,
+        int $tcpConnectTimeout = 15000,
+        int $tlsHandshakeTimeout = 15000,
+        int $transferTimeout = 15000,
         bool $logRequest = true,
         bool $logResponse = true,
         ?string $protocolVersion = null
     ) {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $this->traceId             = $traceId ?? \sha1(\random_bytes(32));
+        $this->traceId             = $traceId ?? uuid();
         $this->tcpConnectTimeout   = $tcpConnectTimeout;
         $this->tlsHandshakeTimeout = $tlsHandshakeTimeout;
         $this->transferTimeout     = $transferTimeout;

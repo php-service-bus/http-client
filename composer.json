@@ -34,9 +34,10 @@
   },
   "require": {
     "php": ">=7.4",
+    "php-service-bus/common": "v4.1.*",
     "amphp/file": "v1.0.*",
     "guzzlehttp/psr7": "v1.6.*",
-    "amphp/http-client": "v4.4.*",
+    "amphp/http-client": "v4.5.*",
     "psr/log": "v1.1.*"
   },
   "require-dev": {

@@ -80,7 +80,7 @@ final class ArtaxHttpClient implements HttpClient
      */
     public function download(string $filePath, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise
     {
-        $context = $context ?? new RequestContext();
+        $context = $context ?? RequestContext::withoutLogging();
 
         return call(
             function () use ($filePath, $destinationDirectory, $fileName, $context): \Generator

@@ -22,7 +22,7 @@ use Amp\Socket\ConnectContext;
  */
 final class ConnectionPollFactory
 {
-    public static function build(int $connectionTimeout = 60000): ConnectionPool
+    public static function build(int $connectionTimeout = 30000): ConnectionPool
     {
         $context = new ConnectContext();
         $context = $context->withConnectTimeout($connectionTimeout);

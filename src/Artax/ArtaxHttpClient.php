@@ -80,6 +80,7 @@ final class ArtaxHttpClient implements HttpClient
                 {
                     $request = new Request($fileUrl);
                     $request->setTransferTimeout($context->transferTimeout);
+                    $request->setInactivityTimeout($context->inactivityTimeout);
                     $request->setTcpConnectTimeout($context->tcpConnectTimeout);
                     $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
 
@@ -178,6 +179,7 @@ final class ArtaxHttpClient implements HttpClient
         $request = new Request($requestData->url, $requestData->method);
 
         $request->setTransferTimeout($context->transferTimeout);
+        $request->setInactivityTimeout($context->inactivityTimeout);
         $request->setTcpConnectTimeout($context->tcpConnectTimeout);
         $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
 

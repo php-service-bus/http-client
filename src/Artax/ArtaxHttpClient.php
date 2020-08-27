@@ -15,6 +15,7 @@ namespace ServiceBus\HttpClient\Artax;
 use Amp\Http\Client\Connection\ConnectionPool;
 use Amp\Http\Client\Connection\UnlimitedConnectionPool;
 use Amp\Http\Client\DelegateHttpClient;
+use ServiceBus\HttpClient\Exception\HttpClientException;
 use ServiceBus\HttpClient\RequestContext;
 use function Amp\ByteStream\pipe;
 use function Amp\call;
@@ -51,11 +52,6 @@ final class ArtaxHttpClient implements HttpClient
         $this->handler = (new HttpClientBuilder())->usingPool($connectionPool)->build();
     }
 
-    /**
-     * @psalm-suppress MixedTypeCoercion
-     *
-     * {@inheritdoc}
-     */
     public function execute(HttpRequest $requestData, ?RequestContext $context = null): Promise
     {
         $context = $context ?? new RequestContext();
@@ -73,21 +69,16 @@ final class ArtaxHttpClient implements HttpClient
         );
     }
 
-    /**
-     * @psalm-suppress MixedTypeCoercion
-     *
-     * {@inheritdoc}
-     */
-    public function download(string $filePath, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise
+    public function download(string $fileUrl, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise
     {
         $context = $context ?? RequestContext::withoutLogging();
 
         return call(
-            function () use ($filePath, $destinationDirectory, $fileName, $context): \Generator
+            function () use ($fileUrl, $destinationDirectory, $fileName, $context): \Generator
             {
                 try
                 {
-                    $request = new Request($filePath);
+                    $request = new Request($fileUrl);
                     $request->setTransferTimeout($context->transferTimeout);
                     $request->setTcpConnectTimeout($context->tcpConnectTimeout);
                     $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
@@ -97,11 +88,22 @@ final class ArtaxHttpClient implements HttpClient
                         $request->setProtocolVersions([$context->protocolVersion]);
                     }
 
-                    /** @var Response $response  */
+                    /** @var Response $response */
                     $response = yield $this->handler->request(
                         $request,
                         new TimeoutCancellationToken($context->transferTimeout)
                     );
+
+                    if ($response->getStatus() !== 200)
+                    {
+                        throw new HttpClientException(
+                            \sprintf(
+                                'Failed to download file `%s`: incorrect server response code: %d',
+                                $fileUrl,
+                                $response->getStatus()
+                            )
+                        );
+                    }
 
                     /** @var string $tmpDirectoryPath */
                     $tmpDirectoryPath = \tempnam(\sys_get_temp_dir(), 'artax-streaming-');
@@ -128,20 +130,10 @@ final class ArtaxHttpClient implements HttpClient
                 {
                     throw adaptArtaxThrowable($throwable);
                 }
-            },
-            $filePath,
-            $destinationDirectory,
-            $fileName
+            }
         );
     }
 
-    /**
-     * @psalm-suppress InvalidReturnType Incorrect resolving the value of the generator
-     *
-     * @throws \Throwable
-     *
-     * @return \Generator<\GuzzleHttp\Psr7\Response>
-     */
     private function doRequest(DelegateHttpClient $client, Request $request, RequestContext $context): \Generator
     {
         $timeStart = \microtime(true);
@@ -153,11 +145,7 @@ final class ArtaxHttpClient implements HttpClient
                 yield from logArtaxRequest($this->logger, $request, $context->traceId);
             }
 
-            /**
-             * @psalm-suppress TooManyTemplateParams
-             *
-             * @var Response $artaxResponse
-             */
+            /** @var Response $artaxResponse */
             $artaxResponse = yield $client->request(
                 $request,
                 new TimeoutCancellationToken($context->transferTimeout)
@@ -214,13 +202,6 @@ final class ArtaxHttpClient implements HttpClient
         return $request;
     }
 
-    /**
-     * @psalm-suppress MixedReturnTypeCoercion
-     *
-     * @param Response $response
-     *
-     * @return \Generator<\GuzzleHttp\Psr7\Response>
-     */
     private static function adaptResponse(Response $response): \Generator
     {
         /** @psalm-suppress InvalidCast Invalid read stream handle */

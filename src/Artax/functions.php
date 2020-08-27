@@ -32,6 +32,7 @@ use function ServiceBus\Common\throwableMessage;
  *
  * @return Promise<string>
  *
+ * @throws \ServiceBus\HttpClient\Exception\HttpClientException
  * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
  * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
  * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters
@@ -43,8 +44,6 @@ function downloadFile(string $url, string $toDirectory, string $withName): Promi
 }
 
 /**
- * @return \Generator<null>
- *
  * @internal
  */
 function logArtaxRequest(LoggerInterface $logger, Request $request, string $requestId): \Generator

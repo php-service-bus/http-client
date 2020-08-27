@@ -1,8 +1,7 @@
 parameters:
-	ignoreErrors:
-		-
-			message: '#Unable to resolve the template type#'
-			path: %currentWorkingDirectory%/src
-		-
-			message: '#Generator expects value type#'
-			path: %currentWorkingDirectory%/src
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        -
+            message: '#Unable to resolve the template type#'
+            path: %currentWorkingDirectory%/src

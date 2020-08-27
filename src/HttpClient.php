@@ -36,10 +36,11 @@ interface HttpClient
      *
      * @return Promise<string>
      *
+     * @throws \ServiceBus\HttpClient\Exception\HttpClientException
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
      * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
      * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
      */
-    public function download(string $filePath, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise;
+    public function download(string $fileUrl, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise;
 }

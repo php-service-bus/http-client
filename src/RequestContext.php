@@ -30,6 +30,9 @@ final class RequestContext
     /** @var int */
     public $transferTimeout;
 
+    /** @var int */
+    public $inactivityTimeout;
+
     /** @var bool */
     public $logRequest;
 
@@ -45,13 +48,15 @@ final class RequestContext
     public static function withoutLogging(
         int $tcpConnectTimeout = 15000,
         int $tlsHandshakeTimeout = 15000,
-        int $transferTimeout = 15000
+        int $transferTimeout = 15000,
+        int $inactivityTimeout = 15000
     ): self {
         return new self(
             null,
             $tcpConnectTimeout,
             $tlsHandshakeTimeout,
             $transferTimeout,
+            $inactivityTimeout,
             false,
             false
         );
@@ -62,6 +67,7 @@ final class RequestContext
         int $tcpConnectTimeout = 15000,
         int $tlsHandshakeTimeout = 15000,
         int $transferTimeout = 15000,
+        int $inactivityTimeout = 15000,
         bool $logRequest = true,
         bool $logResponse = true,
         ?string $protocolVersion = null
@@ -73,5 +79,6 @@ final class RequestContext
         $this->logRequest          = $logRequest;
         $this->logResponse         = $logResponse;
         $this->protocolVersion     = $protocolVersion;
+        $this->inactivityTimeout   = $inactivityTimeout;
     }
 }

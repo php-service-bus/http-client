@@ -12,6 +12,8 @@ tools:
 build:
   nodes:
     analysis:
+      environment:
+        php: 8.0.0
       project_setup:
         override: true
       tests:

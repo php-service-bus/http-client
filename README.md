@@ -1,5 +1,5 @@
 ## What is it?
-[![Build Status](https://travis-ci.org/php-service-bus/http-client.svg?branch=v4.2)](https://travis-ci.org/php-service-bus/http-client)
+![Continuous Integration](https://github.com/php-service-bus/http-client/workflows/Continuous%20Integration/badge.svg)
 [![Shepherd](https://shepherd.dev/github/php-service-bus/http-client/coverage.svg)](https://shepherd.dev/github/php-service-bus/http-client)
 [![Code Coverage](https://scrutinizer-ci.com/g/php-service-bus/http-client/badges/coverage.png?b=v4.2)](https://scrutinizer-ci.com/g/php-service-bus/http-client/?branch=v4.2)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/php-service-bus/http-client/badges/quality-score.png?b=v4.2)](https://scrutinizer-ci.com/g/php-service-bus/http-client/?branch=v4.2)

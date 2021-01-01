@@ -56,7 +56,7 @@ final class ArtaxFormBody implements FormBody
     /**
      * {@inheritdoc}
      */
-    public static function fromParameters(array $fields): self
+    public static function fromParameters(array $fields): ArtaxFormBody
     {
         /** @psalm-var array<string, string|array<string, string>> $fields */
         $self = new self();
@@ -77,7 +77,7 @@ final class ArtaxFormBody implements FormBody
     /**
      * {@inheritdoc}
      */
-    public function addField(string $fieldName, $value): void
+    public function addField(string $fieldName, float|int|string $value): void
     {
         $this->original->addField($fieldName, (string) $value);
     }

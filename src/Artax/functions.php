@@ -122,6 +122,7 @@ function adaptArtaxThrowable(\Throwable $throwable): \Throwable
         /** @var class-string<\Exception> $exceptionClass */
         $exceptionClass = $mapping[$exceptionClass];
 
+        /** @psalm-suppress UnsafeInstantiation */
         return new $exceptionClass($throwable->getMessage(), (int) $throwable->getCode(), $throwable);
     }
 

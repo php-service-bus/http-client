@@ -24,10 +24,8 @@ interface FormBody
      * Create from form parameters.
      *
      * @psalm-param array<string, string|array<string, string>> $fields
-     *
-     * @return static
      */
-    public static function fromParameters(array $fields);
+    public static function fromParameters(array $fields): self;
 
     /**
      * Add a file field to the form entity body.
@@ -36,10 +34,8 @@ interface FormBody
 
     /**
      * Add a data field to the form entity body.
-     *
-     * @param float|integer|string $value
      */
-    public function addField(string $fieldName, $value): void;
+    public function addField(string $fieldName, float|int|string $value): void;
 
     /**
      * Add multiple fields/files.

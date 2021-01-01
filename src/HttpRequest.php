@@ -65,10 +65,8 @@ class HttpRequest
 
     /**
      * @psalm-param array<string, string|array> $headers
-     *
-     * @param FormBody|string $body
      */
-    public static function post(string $url, $body, array $headers = []): self
+    public static function post(string $url, FormBody|string $body, array $headers = []): self
     {
         return new self('POST', $url, $headers, $body);
     }

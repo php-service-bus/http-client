@@ -3,12 +3,12 @@
 /**
  * Abstraction over Http client implementations.
  *
- * @author  Maksim Masiukevich <dev@async-php.com>
+ * @author  Maksim Masiukevich <contacts@desperado.dev>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types = 0);
 
 namespace ServiceBus\HttpClient\Artax;
 
@@ -38,10 +38,14 @@ use ServiceBus\HttpClient\HttpRequest;
  */
 final class ArtaxHttpClient implements HttpClient
 {
-    /** @var DelegateHttpClient */
+    /**
+     * @var DelegateHttpClient
+     */
     private $handler;
 
-    /** @var LoggerInterface */
+    /**
+     * @var LoggerInterface
+     */
     private $logger;
 
     public function __construct(?ConnectionPool $connectionPool = null, LoggerInterface $logger = null)

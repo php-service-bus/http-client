@@ -3,24 +3,24 @@
 /**
  * Abstraction over Http client implementations.
  *
- * @author  Maksim Masiukevich <dev@async-php.com>
+ * @author  Maksim Masiukevich <contacts@desperado.dev>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types = 0);
 
 namespace ServiceBus\HttpClient;
 
 /**
  * Http request data.
- *
- * @psalm-readonly
  */
 class HttpRequest
 {
     /**
      * Http method.
+     *
+     * @psalm-readonly
      *
      * @var string
      */
@@ -29,6 +29,8 @@ class HttpRequest
     /**
      * Request URL.
      *
+     * @psalm-readonly
+     *
      * @var string
      */
     public $url;
@@ -36,6 +38,7 @@ class HttpRequest
     /**
      * Request headers.
      *
+     * @psalm-readonly
      * @psalm-var array<string, array|string>
      *
      * @var array
@@ -44,6 +47,8 @@ class HttpRequest
 
     /**
      * Request payload.
+     *
+     * @psalm-readonly
      *
      * @var FormBody|string|null
      */
@@ -55,7 +60,7 @@ class HttpRequest
      */
     public static function get(string $url, array $queryParameters = [], array $headers = []): self
     {
-        if (0 !== \count($queryParameters))
+        if (\count($queryParameters) !== 0)
         {
             $url = \sprintf('%s?%s', \rtrim($url, '?'), \http_build_query($queryParameters));
         }
@@ -95,6 +100,6 @@ class HttpRequest
      */
     public function isPost(): bool
     {
-        return 'POST' === $this->method;
+        return $this->method === 'POST';
     }
 }

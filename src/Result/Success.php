@@ -3,12 +3,12 @@
 /**
  * Abstraction over Http client implementations.
  *
- * @author  Maksim Masiukevich <dev@async-php.com>
+ * @author  Maksim Masiukevich <contacts@desperado.dev>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types = 0);
 
 namespace ServiceBus\HttpClient\Result;
 
@@ -17,16 +17,32 @@ namespace ServiceBus\HttpClient\Result;
  */
 final class Success implements Either
 {
-    /** @var int */
+    /**
+     * @psalm-readonly
+     *
+     * @var int
+     */
     public $resultCode;
 
-    /** @var string */
+    /**
+     * @psalm-readonly
+     *
+     * @var string
+     */
     public $requestPayload;
 
-    /** @var string */
+    /**
+     * @psalm-readonly
+     *
+     * @var string
+     */
     public $responseBody;
 
-    /** @var string */
+    /**
+     * @psalm-readonly
+     *
+     * @var string
+     */
     public $description;
 
     public function __construct(int $resultCode, string $requestPayload, string $responseBody, string $description)

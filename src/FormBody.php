@@ -3,12 +3,12 @@
 /**
  * Abstraction over Http client implementations.
  *
- * @author  Maksim Masiukevich <dev@async-php.com>
+ * @author  Maksim Masiukevich <contacts@desperado.dev>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types = 0);
 
 namespace ServiceBus\HttpClient;
 
@@ -23,7 +23,7 @@ interface FormBody
     /**
      * Create from form parameters.
      *
-     * @psalm-param array<string, string|array<string, string>> $fields
+     * @psalm-param array<string, float|int|string|InputFilePath> $fields
      */
     public static function fromParameters(array $fields): self;
 
@@ -40,7 +40,7 @@ interface FormBody
     /**
      * Add multiple fields/files.
      *
-     * @psalm-param array<string, string|array<string, string>> $fields
+     * @psalm-param array<string, float|int|string|InputFilePath> $fields
      */
     public function addMultiple(array $fields): void;
 

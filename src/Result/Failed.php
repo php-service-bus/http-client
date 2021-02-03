@@ -3,12 +3,12 @@
 /**
  * Abstraction over Http client implementations.
  *
- * @author  Maksim Masiukevich <dev@async-php.com>
+ * @author  Maksim Masiukevich <contacts@desperado.dev>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types = 0);
 
 namespace ServiceBus\HttpClient\Result;
 
@@ -17,17 +17,31 @@ namespace ServiceBus\HttpClient\Result;
  */
 final class Failed implements Either
 {
-    /** @var int */
+    /**
+     * @psalm-readonly
+     *
+     * @var int
+     */
     public $resultCode;
 
-    /** @var string|null */
+    /**
+     * @psalm-readonly
+     *
+     * @var string|null
+     */
     public $requestPayload;
 
-    /** @var string|null */
+    /**
+     * @psalm-readonly
+     *
+     * @var string|null
+     */
     public $responseBody;
 
     /**
      * This is an internal request related error.
+     *
+     * @psalm-readonly
      *
      * @var bool
      */
@@ -36,6 +50,8 @@ final class Failed implements Either
     /**
      * This is a server side request processing error.
      *
+     * @psalm-readonly
+     *
      * @var bool
      */
     public $isServerError = false;
@@ -43,11 +59,17 @@ final class Failed implements Either
     /**
      * This is an error associated with invalid request parameters.
      *
+     * @psalm-readonly
+     *
      * @var bool
      */
     public $isClientError = false;
 
-    /** @var string */
+    /**
+     * @psalm-readonly
+     *
+     * @var string
+     */
     public $description;
 
     /**
@@ -55,7 +77,15 @@ final class Failed implements Either
      */
     public static function client(int $resultCode, string $requestPayload, string $responseBody, string $description): self
     {
-        return new self(false, true, false, $description, $resultCode, $requestPayload, $responseBody);
+        return new self(
+            isInternalError: false,
+            isClientError: true,
+            isServerError: false,
+            description: $description,
+            resultCode: $resultCode,
+            requestPayload: $requestPayload,
+            responseBody: $responseBody
+        );
     }
 
     /**
@@ -63,7 +93,15 @@ final class Failed implements Either
      */
     public static function server(int $resultCode, string $requestPayload, string $responseBody, string $description): self
     {
-        return new self(false, false, true, $description, $resultCode, $requestPayload, $responseBody);
+        return new self(
+            isInternalError: false,
+            isClientError: false,
+            isServerError: true,
+            description: $description,
+            resultCode: $resultCode,
+            requestPayload: $requestPayload,
+            responseBody: $responseBody
+        );
     }
 
     /**
@@ -71,7 +109,15 @@ final class Failed implements Either
      */
     public static function internal(string $description): self
     {
-        return new self(true, false, false, $description, 400, null, null);
+        return new self(
+            isInternalError: true,
+            isClientError: false,
+            isServerError: false,
+            description: $description,
+            resultCode: 400,
+            requestPayload: null,
+            responseBody: null
+        );
     }
 
     private function __construct(

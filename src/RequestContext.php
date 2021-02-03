@@ -3,12 +3,12 @@
 /**
  * Abstraction over Http client implementations.
  *
- * @author  Maksim Masiukevich <dev@async-php.com>
+ * @author  Maksim Masiukevich <contacts@desperado.dev>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types = 0);
 
 namespace ServiceBus\HttpClient;
 
@@ -16,30 +16,56 @@ use function ServiceBus\Common\uuid;
 
 /**
  * Http request options
- *
- * @psalm-readonly
  */
 final class RequestContext
 {
-    /** @var int */
+    /**
+     * @psalm-readonly
+     *
+     * @var int
+     */
     public $tcpConnectTimeout;
 
-    /** @var int */
+    /**
+     * @psalm-readonly
+     *
+     * @var int
+     */
     public $tlsHandshakeTimeout;
 
-    /** @var int */
+    /**
+     * @psalm-readonly
+     *
+     * @var int
+     */
     public $transferTimeout;
 
-    /** @var int */
+    /**
+     * @psalm-readonly
+     *
+     * @var int
+     */
     public $inactivityTimeout;
 
-    /** @var bool */
+    /**
+     * @psalm-readonly
+     *
+     * @var bool
+     */
     public $logRequest;
 
-    /** @var bool */
+    /**
+     * @psalm-readonly
+     *
+     * @var bool
+     */
     public $logResponse;
 
-    /** @var string */
+    /**
+     * @psalm-readonly
+     *
+     * @var string
+     */
     public $traceId;
 
     /** @var string|null */
@@ -52,13 +78,14 @@ final class RequestContext
         int $inactivityTimeout = 15000
     ): self {
         return new self(
-            null,
-            $tcpConnectTimeout,
-            $tlsHandshakeTimeout,
-            $transferTimeout,
-            $inactivityTimeout,
-            false,
-            false
+            traceId: null,
+            tcpConnectTimeout: $tcpConnectTimeout,
+            tlsHandshakeTimeout: $tlsHandshakeTimeout,
+            transferTimeout: $transferTimeout,
+            inactivityTimeout: $inactivityTimeout,
+            logRequest: false,
+            logResponse: false,
+            protocolVersion: null
         );
     }
 

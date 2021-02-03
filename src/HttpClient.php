@@ -3,12 +3,12 @@
 /**
  * Abstraction over Http client implementations.
  *
- * @author  Maksim Masiukevich <dev@async-php.com>
+ * @author  Maksim Masiukevich <contacts@desperado.dev>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types = 0);
 
 namespace ServiceBus\HttpClient;
 
@@ -27,7 +27,7 @@ interface HttpClient
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
      * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
-     * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
+     * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters
      */
     public function execute(HttpRequest $requestData, ?RequestContext $context = null): Promise;
 
@@ -40,7 +40,12 @@ interface HttpClient
      * @throws \ServiceBus\HttpClient\Exception\DnsResolveFailed
      * @throws \ServiceBus\HttpClient\Exception\ConnectionFailed
      * @throws \ServiceBus\HttpClient\Exception\RequestTimeoutReached
-     * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters Incorrect request\response data
+     * @throws \ServiceBus\HttpClient\Exception\IncorrectParameters
      */
-    public function download(string $fileUrl, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise;
+    public function download(
+        string $fileUrl,
+        string $destinationDirectory,
+        string $fileName,
+        ?RequestContext $context = null
+    ): Promise;
 }

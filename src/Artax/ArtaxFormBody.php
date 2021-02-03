@@ -3,12 +3,12 @@
 /**
  * Abstraction over Http client implementations.
  *
- * @author  Maksim Masiukevich <dev@async-php.com>
+ * @author  Maksim Masiukevich <contacts@desperado.dev>
  * @license MIT
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types = 0);
 
 namespace ServiceBus\HttpClient\Artax;
 
@@ -53,43 +53,33 @@ final class ArtaxFormBody implements FormBody
         $this->original = new AmpFormBody($this->boundary);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function fromParameters(array $fields): ArtaxFormBody
     {
-        /** @psalm-var array<string, string|array<string, string>> $fields */
         $self = new self();
         $self->addMultiple($fields);
 
         return $self;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addFile(string $fieldName, InputFilePath $file, string $contentType = 'application/octet-stream'): void
-    {
+    public function addFile(
+        string $fieldName,
+        InputFilePath $file,
+        string $contentType = 'application/octet-stream'
+    ): void {
         $this->isMultipart = true;
         $this->original->addFile($fieldName, $file->path, $contentType);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addField(string $fieldName, float|int|string $value): void
     {
         $this->original->addField($fieldName, (string) $value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addMultiple(array $fields): void
     {
         /**
          * @var string                         $key
-         * @var float|InputFilePath|int|string $value
+         * @var float|int|string|InputFilePath $value
          */
         foreach ($fields as $key => $value)
         {
@@ -99,17 +89,12 @@ final class ArtaxFormBody implements FormBody
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createBodyStream(): InputStream
     {
         return $this->original->createBodyStream();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function headers(): array
     {
         return [
@@ -119,9 +104,6 @@ final class ArtaxFormBody implements FormBody
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBodyLength(): Promise
     {
         /**
@@ -135,9 +117,6 @@ final class ArtaxFormBody implements FormBody
         return $promise;
     }
 
-    /**
-     * @return AmpFormBody
-     */
     public function preparedBody(): AmpFormBody
     {
         return $this->original;

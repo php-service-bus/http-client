@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 /**
  * Abstraction over Http client implementations.
@@ -27,26 +27,22 @@ final class ArtaxHttpClientSmokeTest extends TestCase
 {
     /**
      * @test
-     *
-     * @throws \Throwable
      */
     public function requestWithEmptyURL(): void
     {
         $this->expectException(HttpClientException::class);
 
-        wait((new ArtaxHttpClient())->execute(HttpRequest::get('')));
+        wait(ArtaxHttpClient::build()->execute(HttpRequest::get('')));
     }
 
     /**
      * @test
-     *
-     * @throws \Throwable
      */
     public function download(): void
     {
         $tmpFilePath = \sys_get_temp_dir() . '/master.zip';
 
-        if (true === \file_exists($tmpFilePath))
+        if (\file_exists($tmpFilePath))
         {
             \unlink($tmpFilePath);
         }
@@ -57,35 +53,31 @@ final class ArtaxHttpClientSmokeTest extends TestCase
             'master.zip'
         ));
 
-        static::assertFileExists($filePath);
-        static::assertFileIsReadable($filePath);
-        static::assertSame($tmpFilePath, $filePath);
+        self::assertFileExists($filePath);
+        self::assertFileIsReadable($filePath);
+        self::assertSame($tmpFilePath, $filePath);
 
-        //   \unlink($tmpFilePath);
+        unlink($tmpFilePath);
     }
 
     /**
      * @test
-     *
-     * @throws \Throwable
      */
     public function postRequest(): void
     {
         /** @var \GuzzleHttp\Psr7\Response $response */
-        $response = wait((new ArtaxHttpClient())->execute(HttpRequest::post('https://google.com', 'qwerty')));
+        $response = wait(ArtaxHttpClient::build()->execute(HttpRequest::post('https://google.com', 'qwerty')));
 
-        static::assertSame(405, $response->getStatusCode());
+        self::assertSame(405, $response->getStatusCode());
     }
 
     /**
      * @test
-     *
-     * @throws \Throwable
      */
     public function wrongDomain(): void
     {
         $this->expectException(DnsResolveFailed::class);
 
-        wait((new ArtaxHttpClient())->execute(HttpRequest::get('https://segdsgrxdrgdrg.vfs')));
+        wait(ArtaxHttpClient::build()->execute(HttpRequest::get('https://segdsgrxdrgdrg.vfs')));
     }
 }

@@ -48,12 +48,22 @@ final class ArtaxHttpClient implements HttpClient
      */
     private $logger;
 
-    public function __construct(?ConnectionPool $connectionPool = null, LoggerInterface $logger = null)
+    public static function withClient(DelegateHttpClient $httpClient, LoggerInterface $logger = null): self
+    {
+        return new self(
+            httpClient: $httpClient,
+            logger: $logger
+        );
+    }
+
+    public static function build(?ConnectionPool $connectionPool = null, LoggerInterface $logger = null): self
     {
         $connectionPool = $connectionPool ?? new UnlimitedConnectionPool();
-        $this->logger   = $logger ?? new NullLogger();
 
-        $this->handler = (new HttpClientBuilder())->usingPool($connectionPool)->build();
+        return new self(
+            httpClient: (new HttpClientBuilder())->usingPool($connectionPool)->build(),
+            logger: $logger
+        );
     }
 
     public function execute(HttpRequest $requestData, ?RequestContext $context = null): Promise
@@ -73,8 +83,12 @@ final class ArtaxHttpClient implements HttpClient
         );
     }
 
-    public function download(string $fileUrl, string $destinationDirectory, string $fileName, ?RequestContext $context = null): Promise
-    {
+    public function download(
+        string $fileUrl,
+        string $destinationDirectory,
+        string $fileName,
+        ?RequestContext $context = null
+    ): Promise {
         $context = $context ?? RequestContext::withoutLogging();
 
         return call(
@@ -219,5 +233,11 @@ final class ArtaxHttpClient implements HttpClient
             $response->getProtocolVersion(),
             $response->getReason()
         );
+    }
+
+    private function __construct(DelegateHttpClient $httpClient, LoggerInterface $logger = null)
+    {
+        $this->handler = $httpClient;
+        $this->logger  = $logger ?? new NullLogger();
     }
 }

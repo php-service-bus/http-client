@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 /**
  * Abstraction over Http client implementations.
@@ -24,8 +24,6 @@ final class ArtaxFormBodyTest extends TestCase
 {
     /**
      * @test
-     *
-     * @throws \Throwable
      */
     public function addFile(): void
     {
@@ -34,14 +32,12 @@ final class ArtaxFormBodyTest extends TestCase
 
         $headers = $formBody->headers();
 
-        static::assertArrayHasKey('Content-Type', $headers);
-        static::assertSame('multipart/form-data', \explode(';', $headers['Content-Type'])[0]);
+        self::assertArrayHasKey('Content-Type', $headers);
+        self::assertSame('multipart/form-data', \explode(';', $headers['Content-Type'])[0]);
     }
 
     /**
      * @test
-     *
-     * @throws \Throwable
      */
     public function fromParametersWithFile(): void
     {
@@ -52,23 +48,21 @@ final class ArtaxFormBodyTest extends TestCase
 
         $headers = $formBody->headers();
 
-        static::assertArrayHasKey('Content-Type', $headers);
-        static::assertSame('multipart/form-data', \explode(';', $headers['Content-Type'])[0]);
+        self::assertArrayHasKey('Content-Type', $headers);
+        self::assertSame('multipart/form-data', \explode(';', $headers['Content-Type'])[0]);
     }
 
     /**
      * @test
-     *
-     * @throws \Throwable
      */
     public function fromParameters(): void
     {
         $formBody = ArtaxFormBody::fromParameters(['simpleField' => 'simpleValue']);
         $headers  = $formBody->headers();
 
-        static::assertArrayHasKey('Content-Type', $headers);
-        static::assertSame('application/x-www-form-urlencoded', $headers['Content-Type']);
+        self::assertArrayHasKey('Content-Type', $headers);
+        self::assertSame('application/x-www-form-urlencoded', $headers['Content-Type']);
 
-        static::assertSame(23, wait($formBody->getBodyLength()));
+        self::assertSame(23, wait($formBody->getBodyLength()));
     }
 }

@@ -26,7 +26,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "ServiceBus\\HttpClient\\Tests\\": "tests/"
+      "ServiceBus\\HttpClient\\Tests\\": "tests/",
+      "ServiceBus\\Common\\Tests\\": "vendor/php-service-bus/common/tests/"
     },
     "files": [
       "src/Artax/functions.php"

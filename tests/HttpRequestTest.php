@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 /**
  * PHP Service Bus Http client component.
@@ -24,8 +24,6 @@ final class HttpRequestTest extends TestCase
 {
     /**
      * @test
-     *
-     * @throws \Throwable
      */
     public function createWithFormBody(): void
     {
@@ -36,12 +34,12 @@ final class HttpRequestTest extends TestCase
 
         $requestData = HttpRequest::post('https://google.com', $body, ['key' => 'value']);
 
-        static::assertArrayHasKey('Content-Type', $requestData->headers);
-        static::assertArrayHasKey('key', $requestData->headers);
+        self::assertArrayHasKey('Content-Type', $requestData->headers);
+        self::assertArrayHasKey('key', $requestData->headers);
 
-        static::assertSame('multipart/form-data', \explode(';', $requestData->headers['Content-Type'])[0]);
-        static::assertSame('value', $requestData->headers['key']);
+        self::assertSame('multipart/form-data', \explode(';', $requestData->headers['Content-Type'])[0]);
+        self::assertSame('value', $requestData->headers['key']);
 
-        static::assertTrue($requestData->isPost());
+        self::assertTrue($requestData->isPost());
     }
 }

@@ -40,7 +40,7 @@ use function ServiceBus\Common\throwableMessage;
  */
 function downloadFile(string $url, string $toDirectory, string $withName): Promise
 {
-    return (new ArtaxHttpClient())->download($url, $toDirectory, $withName);
+    return ArtaxHttpClient::build()->download($url, $toDirectory, $withName);
 }
 
 /**

@@ -9,14 +9,15 @@
 This component is part of the [PHP Service Bus](https://github.com/php-service-bus/service-bus): abstraction over Http client implementations.
 
 ## Documentation
-[HTTP Client](https://github.com/php-service-bus/documentation/blob/master/pages/packages/http_client.md)
+[HTTP Client](https://github.com/php-service-bus/service-bus/blob/v5.0/.documentation/http_client.md)
 
 ## Contributing
 Contributions are welcome! Please read [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
-## Communication Channels
+### Communication Channels
 You can find help and discussion in the following places:
 * [Telegram chat (RU)](https://t.me/php_service_bus)
+* [Twitter](https://twitter.com/PhpBus)
 * Create issue [https://github.com/php-service-bus/service-bus/issues](https://github.com/php-service-bus/service-bus/issues)
 
 ## License

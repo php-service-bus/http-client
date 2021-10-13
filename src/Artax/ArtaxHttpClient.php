@@ -19,9 +19,6 @@ use ServiceBus\HttpClient\Exception\HttpClientException;
 use ServiceBus\HttpClient\RequestContext;
 use function Amp\ByteStream\pipe;
 use function Amp\call;
-use function Amp\File\open;
-use function Amp\File\rename;
-use Amp\File\StatCache;
 use Amp\Http\Client\HttpClientBuilder;
 use Amp\Http\Client\Request;
 use Amp\Http\Client\Response;
@@ -32,6 +29,8 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use ServiceBus\HttpClient\HttpClient;
 use ServiceBus\HttpClient\HttpRequest;
+use function Amp\File\move;
+use function Amp\File\openFile;
 
 /**
  * Artax (amphp-based) http client.
@@ -128,7 +127,7 @@ final class ArtaxHttpClient implements HttpClient
                     $tmpDirectoryPath = \tempnam(\sys_get_temp_dir(), 'artax-streaming-');
 
                     /** @var \Amp\File\File $tmpFile */
-                    $tmpFile = yield open($tmpDirectoryPath, 'w');
+                    $tmpFile = yield openFile($tmpDirectoryPath, 'w');
 
                     yield pipe($response->getBody(), $tmpFile);
 
@@ -139,9 +138,7 @@ final class ArtaxHttpClient implements HttpClient
                     );
 
                     yield $tmpFile->close();
-                    yield rename($tmpDirectoryPath, $destinationFilePath);
-
-                    StatCache::clear($tmpDirectoryPath);
+                    yield move($tmpDirectoryPath, $destinationFilePath);
 
                     return $destinationFilePath;
                 }

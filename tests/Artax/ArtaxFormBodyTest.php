@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnhandledExceptionInspection */
+<?php
+
+/** @noinspection PhpUnhandledExceptionInspection */
 
 /**
  * Abstraction over Http client implementations.
@@ -8,14 +10,14 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace ServiceBus\HttpClient\Tests\Artax;
 
-use function Amp\Promise\wait;
 use PHPUnit\Framework\TestCase;
 use ServiceBus\HttpClient\Artax\ArtaxFormBody;
 use ServiceBus\HttpClient\InputFilePath;
+use function Amp\Promise\wait;
 
 /**
  *

@@ -8,7 +8,7 @@
  * @license https://opensource.org/licenses/MIT
  */
 
-declare(strict_types = 0);
+declare(strict_types=0);
 
 namespace ServiceBus\HttpClient\Artax;
 
@@ -17,8 +17,6 @@ use Amp\Http\Client\Connection\UnlimitedConnectionPool;
 use Amp\Http\Client\DelegateHttpClient;
 use ServiceBus\HttpClient\Exception\HttpClientException;
 use ServiceBus\HttpClient\RequestContext;
-use function Amp\ByteStream\pipe;
-use function Amp\call;
 use Amp\Http\Client\HttpClientBuilder;
 use Amp\Http\Client\Request;
 use Amp\Http\Client\Response;
@@ -29,6 +27,8 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use ServiceBus\HttpClient\HttpClient;
 use ServiceBus\HttpClient\HttpRequest;
+use function Amp\ByteStream\pipe;
+use function Amp\call;
 use function Amp\File\move;
 use function Amp\File\openFile;
 

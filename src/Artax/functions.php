@@ -54,7 +54,7 @@ function logArtaxRequest(LoggerInterface $logger, Request $request, string $requ
             'requestMethod'  => $request->getMethod(),
             'requestUri'     => $request->getUri(),
             'requestContent' => yield $request->getBody()->createBodyStream()->read(),
-            'requestHeaders' => $request->getHeaders(),
+            'requestHeaders' => $request->getRawHeaders(),
             'requestId'      => $requestId,
         ]
     );
@@ -119,7 +119,6 @@ function adaptArtaxThrowable(\Throwable $throwable): \Throwable
 
     if (isset($mapping[$exceptionClass]))
     {
-        /** @var class-string<\Exception> $exceptionClass */
         $exceptionClass = $mapping[$exceptionClass];
 
         /** @psalm-suppress UnsafeInstantiation */

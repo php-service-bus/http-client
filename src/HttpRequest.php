@@ -78,14 +78,11 @@ class HttpRequest
 
     /**
      * @psalm-param array<string, string|array> $headers
-     *
-     * @param FormBody|string|null $body
      */
-    public function __construct(string $method, string $url, array $headers = [], $body = null)
+    public function __construct(string $method, string $url, array $headers = [], FormBody|string|null $body = null)
     {
         if ($body instanceof FormBody)
         {
-            /** @psalm-var array<string, string|array> $headers */
             $headers = \array_merge($body->headers(), $headers);
         }
 

@@ -223,12 +223,13 @@ final class ArtaxHttpClient implements HttpClient
     {
         $responseBody = yield $response->getBody()->buffer();
 
+        /** @psalm-suppress MixedArgumentTypeCoercion */
         return new Psr7Response(
-            $response->getStatus(),
-            $response->getHeaders(),
-            $responseBody,
-            $response->getProtocolVersion(),
-            $response->getReason()
+            status: $response->getStatus(),
+            headers: $response->getHeaders(),
+            body: $responseBody,
+            version: $response->getProtocolVersion(),
+            reason: $response->getReason()
         );
     }
 

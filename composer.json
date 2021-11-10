@@ -45,8 +45,8 @@
   "require-dev": {
     "php-service-bus/code-style-config": "v5.1.*",
     "phpunit/phpunit": "v9.5.*",
-    "vimeo/psalm": "v4.10.*",
-    "phpstan/phpstan": "v0.12.*"
+    "vimeo/psalm": "v4.12.*",
+    "phpstan/phpstan": "v1.1.*"
   },
   "prefer-stable": true,
   "minimum-stability": "dev",

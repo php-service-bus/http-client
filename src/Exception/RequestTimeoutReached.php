@@ -12,9 +12,6 @@ declare(strict_types=0);
 
 namespace ServiceBus\HttpClient\Exception;
 
-/**
- *
- */
 final class RequestTimeoutReached extends \RuntimeException implements HttpClientExceptionMarker
 {
 }

@@ -21,6 +21,7 @@ final class RequestContext
 {
     /**
      * @psalm-readonly
+     * @psalm-var positive-int
      *
      * @var int
      */
@@ -28,6 +29,7 @@ final class RequestContext
 
     /**
      * @psalm-readonly
+     * @psalm-var positive-int
      *
      * @var int
      */
@@ -35,6 +37,7 @@ final class RequestContext
 
     /**
      * @psalm-readonly
+     * @psalm-var positive-int
      *
      * @var int
      */
@@ -42,6 +45,7 @@ final class RequestContext
 
     /**
      * @psalm-readonly
+     * @psalm-var positive-int
      *
      * @var int
      */
@@ -63,14 +67,25 @@ final class RequestContext
 
     /**
      * @psalm-readonly
+     * @psalm-var non-empty-string
      *
      * @var string
      */
     public $traceId;
 
-    /** @var string|null */
+    /**
+     * @psalm-var non-empty-string|null
+     *
+     * @var string|null
+     */
     public $protocolVersion;
 
+    /**
+     * @psalm-param positive-int $tcpConnectTimeout
+     * @psalm-param positive-int $tlsHandshakeTimeout
+     * @psalm-param positive-int $transferTimeout
+     * @psalm-param positive-int $inactivityTimeout
+     */
     public static function withoutLogging(
         int $tcpConnectTimeout = 15000,
         int $tlsHandshakeTimeout = 15000,
@@ -89,14 +104,22 @@ final class RequestContext
         );
     }
 
+    /**
+     * @psalm-param non-empty-string|null $traceId
+     * @psalm-param positive-int          $tcpConnectTimeout
+     * @psalm-param positive-int          $tlsHandshakeTimeout
+     * @psalm-param positive-int          $transferTimeout
+     * @psalm-param positive-int          $inactivityTimeout
+     * @psalm-param non-empty-string|null $protocolVersion
+     */
     public function __construct(
         ?string $traceId = null,
-        int $tcpConnectTimeout = 15000,
-        int $tlsHandshakeTimeout = 15000,
-        int $transferTimeout = 15000,
-        int $inactivityTimeout = 15000,
-        bool $logRequest = true,
-        bool $logResponse = true,
+        int     $tcpConnectTimeout = 15000,
+        int     $tlsHandshakeTimeout = 15000,
+        int     $transferTimeout = 15000,
+        int     $inactivityTimeout = 15000,
+        bool    $logRequest = true,
+        bool    $logResponse = true,
         ?string $protocolVersion = null
     ) {
         $this->traceId             = $traceId ?? uuid();

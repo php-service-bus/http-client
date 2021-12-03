@@ -22,7 +22,7 @@ class HttpRequest
      *
      * @psalm-readonly
      *
-     * @var string
+     * @var HttpMethod
      */
     public $method;
 
@@ -30,6 +30,7 @@ class HttpRequest
      * Request URL.
      *
      * @psalm-readonly
+     * @psalm-var non-empty-string
      *
      * @var string
      */
@@ -39,7 +40,7 @@ class HttpRequest
      * Request headers.
      *
      * @psalm-readonly
-     * @psalm-var array<string, array|string>
+     * @psalm-var array<non-empty-string, array|string>
      *
      * @var array
      */
@@ -50,36 +51,65 @@ class HttpRequest
      *
      * @psalm-readonly
      *
-     * @var FormBody|string|null
+     * @var FormBody|non-empty-string|null
      */
     public $body;
 
     /**
-     * @psalm-param array<string, string|int|float> $queryParameters
-     * @psalm-param array<string, array|string> $headers
+     * @psalm-param non-empty-string                          $url
+     * @psalm-param array<non-empty-string, string|int|float> $queryParameters
+     * @psalm-param array<non-empty-string, array|string>     $headers
      */
     public static function get(string $url, array $queryParameters = [], array $headers = []): self
     {
-        if (\count($queryParameters) !== 0)
-        {
-            $url = \sprintf('%s?%s', \rtrim($url, '?'), \http_build_query($queryParameters));
-        }
-
-        return new self('GET', \rtrim($url, '?'), $headers);
+        return new self(HttpMethod::GET, self::buildUrl($url, $queryParameters), $headers);
     }
 
     /**
-     * @psalm-param array<string, string|array> $headers
+     * @psalm-param non-empty-string                          $url
+     * @psalm-param array<non-empty-string, string|int|float> $queryParameters
      */
-    public static function post(string $url, FormBody|string $body, array $headers = []): self
+    public static function delete(string $url, array $queryParameters = []): self
     {
-        return new self('POST', $url, $headers, $body);
+        return new self(HttpMethod::DELETE, self::buildUrl($url, $queryParameters));
     }
 
     /**
-     * @psalm-param array<string, string|array> $headers
+     * @psalm-param non-empty-string                      $url
+     * @psalm-param FormBody|non-empty-string|null        $body
+     * @psalm-param array<non-empty-string, string|array> $headers
      */
-    public function __construct(string $method, string $url, array $headers = [], FormBody|string|null $body = null)
+    public static function post(string $url, FormBody|string|null $body, array $headers = []): self
+    {
+        return new self(HttpMethod::POST, $url, $headers, $body);
+    }
+
+    /**
+     * @psalm-param non-empty-string                      $url
+     * @psalm-param FormBody|non-empty-string|null        $body
+     * @psalm-param array<non-empty-string, string|array> $headers
+     */
+    public static function put(string $url, FormBody|string|null $body, array $headers = []): self
+    {
+        return new self(HttpMethod::PUT, $url, $headers, $body);
+    }
+
+    /**
+     * @psalm-param non-empty-string                      $url
+     * @psalm-param FormBody|non-empty-string|null        $body
+     * @psalm-param array<non-empty-string, string|array> $headers
+     */
+    public static function patch(string $url, FormBody|string|null $body, array $headers = []): self
+    {
+        return new self(HttpMethod::PATCH, $url, $headers, $body);
+    }
+
+    /**
+     * @psalm-param non-empty-string                      $url
+     * @psalm-param array<non-empty-string, array|string> $headers
+     * @psalm-param FormBody|non-empty-string|null        $body
+     */
+    public function __construct(HttpMethod $method, string $url, array $headers = [], FormBody|string|null $body = null)
     {
         if ($body instanceof FormBody)
         {
@@ -93,10 +123,18 @@ class HttpRequest
     }
 
     /**
-     * Is POST request.
+     * @psalm-param non-empty-string                          $url
+     * @psalm-param array<non-empty-string, string|int|float> $queryParameters
+     *
+     * @psalm-return non-empty-string
      */
-    public function isPost(): bool
+    private static function buildUrl(string $url, array $queryParameters): string
     {
-        return $this->method === 'POST';
+        if (\count($queryParameters) !== 0)
+        {
+            return \sprintf('%s?%s', \rtrim($url, '?'), \http_build_query($queryParameters));
+        }
+
+        return $url;
     }
 }

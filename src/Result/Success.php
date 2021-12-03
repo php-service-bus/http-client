@@ -19,6 +19,7 @@ final class Success implements Either
 {
     /**
      * @psalm-readonly
+     * @psalm-var positive-int
      *
      * @var int
      */
@@ -45,6 +46,9 @@ final class Success implements Either
      */
     public $description;
 
+    /**
+     * @psalm-param positive-int $resultCode
+     */
     public function __construct(int $resultCode, string $requestPayload, string $responseBody, string $description)
     {
         $this->resultCode     = $resultCode;

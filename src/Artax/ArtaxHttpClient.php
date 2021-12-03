@@ -191,7 +191,7 @@ final class ArtaxHttpClient implements HttpClient
 
     private static function buildRequest(HttpRequest $requestData, RequestContext $context): Request
     {
-        $request = new Request($requestData->url, $requestData->method);
+        $request = new Request($requestData->url, $requestData->method->name);
 
         $request->setTransferTimeout($context->transferTimeout);
         $request->setInactivityTimeout($context->inactivityTimeout);
@@ -199,7 +199,6 @@ final class ArtaxHttpClient implements HttpClient
         $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
 
         /**
-         * @var string          $headerKey
          * @var string|string[] $value
          */
         foreach ($requestData->headers as $headerKey => $value)

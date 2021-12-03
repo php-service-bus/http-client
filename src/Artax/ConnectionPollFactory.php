@@ -22,6 +22,9 @@ use Amp\Socket\ConnectContext;
  */
 final class ConnectionPollFactory
 {
+    /**
+     * @psalm-param positive-int $connectionTimeout
+     */
     public static function build(int $connectionTimeout = 30000): ConnectionPool
     {
         $context = new ConnectContext();

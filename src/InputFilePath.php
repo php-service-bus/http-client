@@ -21,11 +21,15 @@ final class InputFilePath
      * Absolute file path.
      *
      * @psalm-readonly
+     * @psalm-var non-empty-string
      *
      * @var string
      */
     public $path;
 
+    /**
+     * @psalm-param non-empty-string $path
+     */
     public function __construct(string $path)
     {
         $this->path = $path;
@@ -33,9 +37,19 @@ final class InputFilePath
 
     /**
      * Get file name.
+     *
+     * @psalm-return non-empty-string
      */
     public function fileName(): string
     {
-        return \pathinfo($this->path, \PATHINFO_BASENAME);
+        /**
+         * @noinspection PhpUnnecessaryLocalVariableInspection
+         * @noinspection OneTimeUseVariablesInspection
+         *
+         * @psalm-var non-empty-string $filePath
+         */
+        $filePath = \pathinfo($this->path, \PATHINFO_BASENAME);
+
+        return $filePath;
     }
 }

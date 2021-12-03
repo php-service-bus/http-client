@@ -12,9 +12,6 @@ declare(strict_types=0);
 
 namespace ServiceBus\HttpClient\Exception;
 
-/**
- *
- */
 final class DnsResolveFailed extends \RuntimeException implements HttpClientExceptionMarker
 {
 }

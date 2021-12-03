@@ -19,6 +19,7 @@ final class Failed implements Either
 {
     /**
      * @psalm-readonly
+     * @psalm-var positive-int
      *
      * @var int
      */
@@ -74,6 +75,8 @@ final class Failed implements Either
 
     /**
      * This is an error associated with invalid request parameters.
+     *
+     * @psalm-param positive-int $resultCode
      */
     public static function client(int $resultCode, string $requestPayload, string $responseBody, string $description): self
     {
@@ -90,6 +93,8 @@ final class Failed implements Either
 
     /**
      * This is a server side request processing error.
+     *
+     * @psalm-param positive-int $resultCode
      */
     public static function server(int $resultCode, string $requestPayload, string $responseBody, string $description): self
     {
@@ -120,12 +125,15 @@ final class Failed implements Either
         );
     }
 
+    /**
+     * @psalm-param positive-int $resultCode
+     */
     private function __construct(
-        bool $isInternalError,
-        bool $isClientError,
-        bool $isServerError,
-        string $description,
-        int $resultCode,
+        bool    $isInternalError,
+        bool    $isClientError,
+        bool    $isServerError,
+        string  $description,
+        int     $resultCode,
         ?string $requestPayload,
         ?string $responseBody
     ) {

@@ -90,7 +90,6 @@ final class ArtaxFormBody implements FormBody
         return $this->original->createBodyStream();
     }
 
-
     public function headers(): array
     {
         return [

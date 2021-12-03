@@ -41,7 +41,18 @@ final class HttpRequestTest extends TestCase
 
         self::assertSame('multipart/form-data', \explode(';', $requestData->headers['Content-Type'])[0]);
         self::assertSame('value', $requestData->headers['key']);
+    }
 
-        self::assertTrue($requestData->isPost());
+    /**
+     * @test
+     */
+    public function buildRequestUrl(): void
+    {
+        $requestData = HttpRequest::get('https://google.com', ['key' => 'value', 'value' => 'key']);
+
+        self::assertEquals(
+            'https://google.com?key=value&value=key',
+            $requestData->url
+        );
     }
 }

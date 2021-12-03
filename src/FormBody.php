@@ -23,12 +23,14 @@ interface FormBody
     /**
      * Create from form parameters.
      *
-     * @psalm-param array<string, float|int|string|InputFilePath> $fields
+     * @psalm-param array<non-empty-string, float|int|string|InputFilePath> $fields
      */
     public static function fromParameters(array $fields): self;
 
     /**
      * Add a file field to the form entity body.
+     *
+     * @psalm-param non-empty-string $contentType
      */
     public function addFile(string $fieldName, InputFilePath $file, string $contentType = 'application/octet-stream'): void;
 
@@ -52,7 +54,7 @@ interface FormBody
     /**
      * Retrieve a key-value array of headers to add to the outbound request.
      *
-     * @psalm-return array<string, string>
+     * @psalm-return array<non-empty-string, array|string>
      */
     public function headers(): array;
 

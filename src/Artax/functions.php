@@ -30,6 +30,10 @@ use function ServiceBus\Common\throwableMessage;
  *
  * @api
  *
+ * @psalm-param non-empty-string $url
+ * @psalm-param non-empty-string $toDirectory
+ * @psalm-param non-empty-string $withName
+ *
  * @return Promise<string>
  *
  * @throws \ServiceBus\HttpClient\Exception\HttpClientException
@@ -45,6 +49,8 @@ function downloadFile(string $url, string $toDirectory, string $withName): Promi
 
 /**
  * @internal
+ *
+ * @psalm-param non-empty-string $requestId
  */
 function logArtaxRequest(LoggerInterface $logger, Request $request, string $requestId): \Generator
 {
@@ -62,6 +68,9 @@ function logArtaxRequest(LoggerInterface $logger, Request $request, string $requ
 
 /**
  * @internal
+ *
+ * @psalm-param non-empty-string $requestId
+ * @psalm-param numeric-string   $executionTime
  *
  * @return void
  */
@@ -81,6 +90,9 @@ function logArtaxResponse(LoggerInterface $logger, Response $response, string $r
 
 /**
  * @internal
+ *
+ * @psalm-param non-empty-string $requestId
+ * @psalm-param numeric-string   $executionTime
  *
  * @return void
  */

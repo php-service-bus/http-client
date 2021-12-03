@@ -12,9 +12,6 @@ declare(strict_types=0);
 
 namespace ServiceBus\HttpClient\Exception;
 
-/**
- * Another exception occurred.
- */
 class HttpClientException extends \RuntimeException implements HttpClientExceptionMarker
 {
 }

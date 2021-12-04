@@ -40,7 +40,7 @@
     "amphp/parallel": "v1.4.*",
     "guzzlehttp/psr7": "v2.1.*",
     "amphp/http-client": "v4.6.*",
-    "psr/log": "v3.0.*"
+    "psr/log": "v1.1.*"
   },
   "require-dev": {
     "php-service-bus/code-style-config": "v5.1.*",

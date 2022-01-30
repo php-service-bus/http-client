@@ -1,7 +1,3 @@
 parameters:
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
-	ignoreErrors:
-		- '#Cannot cast mixed to int#'
-		- '#Access to undefined constant ServiceBus\\HttpClient\\HttpMethod(.*)#'
-		- '#Access to an undefined property ServiceBus\\HttpClient\\HttpMethod(.*)#'

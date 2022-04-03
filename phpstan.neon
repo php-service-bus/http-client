@@ -1,3 +1,7 @@
 parameters:
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
+	ignoreErrors:
+		-
+			message: '#does not accept array<string, array\|string>#'
+			path: %currentWorkingDirectory%/src/HttpRequest.php

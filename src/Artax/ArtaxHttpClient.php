@@ -123,7 +123,10 @@ final class ArtaxHttpClient implements HttpClient
                         );
                     }
 
-                    /** @var string $tmpDirectoryPath */
+                    /**
+                     * @var string $tmpDirectoryPath
+                     * @phpstan-ignore varTag.nativeType
+                     */
                     $tmpDirectoryPath = \tempnam(\sys_get_temp_dir(), 'artax-streaming-');
 
                     /** @var \Amp\File\File $tmpFile */
@@ -226,7 +229,6 @@ final class ArtaxHttpClient implements HttpClient
     {
         $responseBody = yield $response->getBody()->buffer();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
         return new Psr7Response(
             status: $response->getStatus(),
             headers: $response->getHeaders(),

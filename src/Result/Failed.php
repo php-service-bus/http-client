@@ -12,9 +12,6 @@ declare(strict_types=0);
 
 namespace ServiceBus\HttpClient\Result;
 
-/**
- * @psalm-immutable
- */
 final class Failed implements Either
 {
     /**
@@ -42,8 +39,6 @@ final class Failed implements Either
     /**
      * This is an internal request related error.
      *
-     * @psalm-readonly
-     *
      * @var bool
      */
     public $isInternalError = false;
@@ -51,16 +46,12 @@ final class Failed implements Either
     /**
      * This is a server side request processing error.
      *
-     * @psalm-readonly
-     *
      * @var bool
      */
     public $isServerError = false;
 
     /**
      * This is an error associated with invalid request parameters.
-     *
-     * @psalm-readonly
      *
      * @var bool
      */

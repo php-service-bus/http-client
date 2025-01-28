@@ -19,6 +19,7 @@ use ServiceBus\HttpClient\Artax\ArtaxHttpClient;
 use ServiceBus\HttpClient\Exception\DnsResolveFailed;
 use ServiceBus\HttpClient\Exception\HttpClientException;
 use ServiceBus\HttpClient\HttpRequest;
+
 use function Amp\Promise\wait;
 use function ServiceBus\HttpClient\Artax\downloadFile;
 
@@ -44,8 +45,7 @@ final class ArtaxHttpClientSmokeTest extends TestCase
     {
         $tmpFilePath = \sys_get_temp_dir() . '/master.zip';
 
-        if (\file_exists($tmpFilePath))
-        {
+        if (\file_exists($tmpFilePath)) {
             \unlink($tmpFilePath);
         }
 

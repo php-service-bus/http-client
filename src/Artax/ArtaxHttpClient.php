@@ -27,6 +27,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use ServiceBus\HttpClient\HttpClient;
 use ServiceBus\HttpClient\HttpRequest;
+
 use function Amp\ByteStream\pipe;
 use function Amp\call;
 use function Amp\File\move;
@@ -70,8 +71,7 @@ final class ArtaxHttpClient implements HttpClient
         $context = $context ?? new RequestContext();
 
         return call(
-            function () use ($requestData, $context): \Generator
-            {
+            function () use ($requestData, $context): \Generator {
                 $request = self::buildRequest($requestData, $context);
 
                 /** @var \GuzzleHttp\Psr7\Response $response */
@@ -91,18 +91,15 @@ final class ArtaxHttpClient implements HttpClient
         $context = $context ?? RequestContext::withoutLogging();
 
         return call(
-            function () use ($fileUrl, $destinationDirectory, $fileName, $context): \Generator
-            {
-                try
-                {
+            function () use ($fileUrl, $destinationDirectory, $fileName, $context): \Generator {
+                try {
                     $request = new Request($fileUrl);
                     $request->setTransferTimeout($context->transferTimeout);
                     $request->setInactivityTimeout($context->inactivityTimeout);
                     $request->setTcpConnectTimeout($context->tcpConnectTimeout);
                     $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
 
-                    if ($context->protocolVersion !== null)
-                    {
+                    if ($context->protocolVersion !== null) {
                         $request->setProtocolVersions([$context->protocolVersion]);
                     }
 
@@ -112,8 +109,7 @@ final class ArtaxHttpClient implements HttpClient
                         new TimeoutCancellationToken($context->transferTimeout)
                     );
 
-                    if ($response->getStatus() !== 200)
-                    {
+                    if ($response->getStatus() !== 200) {
                         throw new HttpClientException(
                             \sprintf(
                                 'Failed to download file `%s`: incorrect server response code: %d',
@@ -144,9 +140,7 @@ final class ArtaxHttpClient implements HttpClient
                     yield move($tmpDirectoryPath, $destinationFilePath);
 
                     return $destinationFilePath;
-                }
-                catch (\Throwable $throwable)
-                {
+                } catch (\Throwable $throwable) {
                     throw adaptArtaxThrowable($throwable);
                 }
             }
@@ -157,10 +151,8 @@ final class ArtaxHttpClient implements HttpClient
     {
         $timeStart = \microtime(true);
 
-        try
-        {
-            if ($context->logRequest === true)
-            {
+        try {
+            if ($context->logRequest === true) {
                 yield from logArtaxRequest($this->logger, $request, $context->traceId);
             }
 
@@ -175,15 +167,12 @@ final class ArtaxHttpClient implements HttpClient
 
             $executionTime = (string) (\microtime(true) - $timeStart);
 
-            if ($context->logResponse === true)
-            {
+            if ($context->logResponse === true) {
                 logArtaxResponse($this->logger, $response, $context->traceId, $executionTime);
             }
 
             return $response;
-        }
-        catch (\Throwable $throwable)
-        {
+        } catch (\Throwable $throwable) {
             $executionTime = (string) (\microtime(true) - $timeStart);
 
             logArtaxThrowable($this->logger, $throwable, $context->traceId, $executionTime);
@@ -200,16 +189,14 @@ final class ArtaxHttpClient implements HttpClient
         $request->setInactivityTimeout($context->inactivityTimeout);
         $request->setTcpConnectTimeout($context->tcpConnectTimeout);
         $request->setTlsHandshakeTimeout($context->tlsHandshakeTimeout);
-        if ($context->protocolVersion !== null)
-        {
+        if ($context->protocolVersion !== null) {
             $request->setProtocolVersions([$context->protocolVersion]);
         }
 
         /**
          * @var string|string[] $value
          */
-        foreach ($requestData->headers as $headerKey => $value)
-        {
+        foreach ($requestData->headers as $headerKey => $value) {
             $request->setHeader($headerKey, $value);
         }
 

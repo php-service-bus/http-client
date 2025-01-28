@@ -17,6 +17,7 @@ namespace ServiceBus\HttpClient\Tests\Artax;
 use PHPUnit\Framework\TestCase;
 use ServiceBus\HttpClient\Artax\ArtaxFormBody;
 use ServiceBus\HttpClient\InputFilePath;
+
 use function Amp\Promise\wait;
 
 /**

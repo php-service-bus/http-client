@@ -23,6 +23,7 @@ use Amp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Log\LoggerInterface;
 use ServiceBus\HttpClient\Exception as HttpClientExceptions;
+
 use function ServiceBus\Common\throwableMessage;
 
 /**
@@ -129,8 +130,7 @@ function adaptArtaxThrowable(\Throwable $throwable): \Throwable
     /** @psalm-var class-string<\Amp\Http\Client\HttpException> $exceptionClass */
     $exceptionClass = \get_class($throwable);
 
-    if (isset($mapping[$exceptionClass]))
-    {
+    if (isset($mapping[$exceptionClass])) {
         $exceptionClass = $mapping[$exceptionClass];
 
         /** @psalm-suppress UnsafeInstantiation */

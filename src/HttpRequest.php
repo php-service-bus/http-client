@@ -111,8 +111,7 @@ class HttpRequest
      */
     public function __construct(HttpMethod $method, string $url, array $headers = [], FormBody|string|null $body = null)
     {
-        if ($body instanceof FormBody)
-        {
+        if ($body instanceof FormBody) {
             $headers = \array_merge($body->headers(), $headers);
         }
 
@@ -130,8 +129,7 @@ class HttpRequest
      */
     private static function buildUrl(string $url, array $queryParameters): string
     {
-        if (\count($queryParameters) !== 0)
-        {
+        if (\count($queryParameters) !== 0) {
             return \sprintf('%s?%s', \rtrim($url, '?'), \http_build_query($queryParameters));
         }
 
